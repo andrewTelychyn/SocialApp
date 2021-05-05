@@ -1,0 +1,12 @@
+D:\Programming\.NET\SocialApp\SocialApp.BL\bin\Release\netcoreapp3.1\SocialApp.BL.deps.json
+D:\Programming\.NET\SocialApp\SocialApp.BL\bin\Release\netcoreapp3.1\SocialApp.BL.dll
+D:\Programming\.NET\SocialApp\SocialApp.BL\bin\Release\netcoreapp3.1\SocialApp.BL.pdb
+D:\Programming\.NET\SocialApp\SocialApp.BL\bin\Release\netcoreapp3.1\SocialApp.DA.dll
+D:\Programming\.NET\SocialApp\SocialApp.BL\bin\Release\netcoreapp3.1\SocialApp.DA.pdb
+D:\Programming\.NET\SocialApp\SocialApp.BL\obj\Release\netcoreapp3.1\SocialApp.BL.csprojAssemblyReference.cache
+D:\Programming\.NET\SocialApp\SocialApp.BL\obj\Release\netcoreapp3.1\SocialApp.BL.AssemblyInfoInputs.cache
+D:\Programming\.NET\SocialApp\SocialApp.BL\obj\Release\netcoreapp3.1\SocialApp.BL.AssemblyInfo.cs
+D:\Programming\.NET\SocialApp\SocialApp.BL\obj\Release\netcoreapp3.1\SocialApp.BL.csproj.CoreCompileInputs.cache
+D:\Programming\.NET\SocialApp\SocialApp.BL\obj\Release\netcoreapp3.1\SocialApp.BL.csproj.CopyComplete
+D:\Programming\.NET\SocialApp\SocialApp.BL\obj\Release\netcoreapp3.1\SocialApp.BL.dll
+D:\Programming\.NET\SocialApp\SocialApp.BL\obj\Release\netcoreapp3.1\SocialApp.BL.pdb
