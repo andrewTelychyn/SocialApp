@@ -26,29 +26,7 @@ export const LoginPage = () => {
     }
 
     return(
-        // <div className="container">
-        //     <div className="nav-bar">
-        //         <ul>
-        //             <li><NavLink to="/register">Register</NavLink></li>
-        //             <li><NavLink to="/login">Login</NavLink></li>
-        //         </ul>
-        //     </div>
-        //     <div className="main-body">
-        //         <div className="form-group">
-        //             <label htmlFor="email-register">Email</label>
-        //             <input type="email" placeholder="Email" id="email-register" name="Email" onChange={changeHandler} required/>
-        //         </div>
-        //         <div className="form-group">
-        //             <label htmlFor="password-register">Password</label>
-        //             <input type="password" placeholder="Password" id="password-register" name="Password" onChange={changeHandler} required/>
-        //         </div>
-        //         <div className="form-group" id="submit-form-group">
-        //             <input type="submit" value="Submit" onClick={loginHandler}/>
-        //         </div>
-           
-        //     </div>
-        // </div>
-        <div className="container-2">
+        <div className="container">
             <div className='wrapper'>
                 <div className='hello-part left-borders'>
                     <h2>Welcome back!</h2>

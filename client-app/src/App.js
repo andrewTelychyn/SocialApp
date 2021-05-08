@@ -11,9 +11,7 @@ function App() {
   return (
     <AuthContext.Provider value={{login, logout, token, userId, isAuthenticated}}>
       <BrowserRouter>
-        <div>
           {routes}
-        </div>
       </BrowserRouter>
     </AuthContext.Provider>
   );

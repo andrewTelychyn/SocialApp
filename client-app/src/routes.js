@@ -3,18 +3,35 @@ import {Route, Switch, Redirect} from 'react-router-dom'
 import {LoginPage} from './pages/LoginPage.jsx'
 import {RegisterPage} from './pages/RegisterPage.jsx'
 import {MainPage} from './pages/MainPage.jsx'
+import {ProfilePage} from './pages/ProfilePage'
+import {EditProfilePage} from './pages/EditProfilePage'
+import {TrendingPage} from './pages/TrendingPage'
+import {CommentPage} from './pages/CommentPage'
 
 export const useRoute = (isAuthenticated) => {
     if(isAuthenticated)
     {
         return(
             <Switch>
-                <Route path="/main">
+                <Route path="/home">
                     <MainPage/>
-                    {/* <AuthorizedPage/> */}
-                    {/* <h1>Hello</h1> */}
                 </Route>
-                <Redirect to="/main"/>
+                <Route path="/profile" exact>
+                    <ProfilePage/>
+                </Route>
+                <Route path="/profile/edit" exact>
+                    <EditProfilePage/>
+                </Route>
+                <Route path="/trending" exact>
+                    <TrendingPage/>
+                </Route>
+                <Route path="/comment/:id">
+                    <CommentPage/>
+                </Route>
+                <Route path="/profile/:id">
+                    <ProfilePage/>
+                </Route>
+                <Redirect to="/home"/>
             </Switch>
         )
     }
