@@ -12,7 +12,7 @@ namespace SocialApp.BL.DTO
 
         public string Bio { get; set; }
 
-        public byte[] Photo { get; set; }
+        public string Photo { get; set; }
 
 
         public string Email { get; set; }

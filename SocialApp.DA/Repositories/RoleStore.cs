@@ -32,5 +32,10 @@ namespace SocialApp.DA.Repositories
         {
             return context.Roles.Find(name);
         }
+
+        public void Update(ApplicationRole item)
+        {
+            context.Roles.Update(item);
+        }
     }
 }

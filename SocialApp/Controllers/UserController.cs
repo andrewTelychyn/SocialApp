@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SocialApp.BL.Interfaces;
+using SocialApp.BL.BusinessModels;
+using SocialApp.BL.DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,6 +15,49 @@ namespace SocialApp.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly IUserProfileService service;
+
+        public UserController(IUserProfileService service)
+        {
+            this.service = service;
+        }
+
+        // POST api/user/get-profile
+        [HttpPost]
+        [Route("getprofile")]
+        public async Task<IActionResult> GetProfile(UserDTO userDTO)
+        {
+            System.Console.WriteLine("trying to get");
+            var result = await service.GetUser(userDTO.Id);
+
+            if (!result.Succedeed)
+            {
+                System.Console.WriteLine(result.Message);
+                return BadRequest(result.Message);
+            }
+
+            System.Console.WriteLine("Getting user success");
+            return new OkObjectResult(result.Object);
+        }
+
+        // POST api/user/update
+        [HttpPost]
+        [Route("update")]
+        public IActionResult Update(UserDTO userDTO)
+        {
+            System.Console.WriteLine("hello");
+            var result = service.UpdateProfile(userDTO);
+
+            if (!result.Succedeed)
+            {
+                System.Console.WriteLine(result.Message);
+                return BadRequest(result.Message);
+            }
+
+            System.Console.WriteLine("Updating user success");
+            return Ok();
+        }
+
         // GET: api/<UserController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -19,12 +65,6 @@ namespace SocialApp.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<UserController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST api/<UserController>
         [HttpPost]

@@ -64,6 +64,7 @@ textarea:focus, input:focus{
     height: 70vh;
     width: 50vw;
     flex-direction: row;
+    min-height: 400px;
 }
 
 .wrapper-bg {
@@ -77,7 +78,7 @@ textarea:focus, input:focus{
     @extend .wrapper;
     height: 90vh;
     width: 21vw;
-    min-height: 520px;
+    min-height: 650px;
     min-width: 300px;
 }
 
@@ -641,5 +642,39 @@ textarea:focus, input:focus{
             border-radius: 3px;
             cursor: pointer;
         }
+    }
+}
+
+.input-post {
+    background-color: $green-color;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 15px;
+    margin-bottom: 35px;
+
+    span {
+        color:$white-color;
+        font-weight: 500;
+        font-size: 15px;
+        margin: 5px 0 8px 0;
+    }
+
+    input[type="text"] {
+        background-color: $grey-color;
+        padding: 8px 10px;
+        margin-bottom: 8px;
+        border-radius: 3px;
+        font-size: 20px;
+    }
+
+    p {
+        background-color: $white-color;
+        font-family: $raleway;
+        width: 200px;
+        text-align: center;
+        border-radius: 3px;
+        padding: 8px 0;
+        cursor: pointer;
     }
 }

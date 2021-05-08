@@ -7,7 +7,7 @@ import {useRoute} from './routes'
 function App() {
   const {login, logout, token, userId} = useAuth()
   const isAuthenticated = !!token
-  const routes = useRoute(true)
+  const routes = useRoute(isAuthenticated)
   return (
     <AuthContext.Provider value={{login, logout, token, userId, isAuthenticated}}>
       <BrowserRouter>

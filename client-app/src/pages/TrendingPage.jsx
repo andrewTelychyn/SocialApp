@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {NavLink} from 'react-router-dom'
 import {Post} from '../components/Post'
+import {AuthContext} from '../context/AuthContext'
 
 export const TrendingPage = () => {
+
+    const context = useContext(AuthContext)
 
     let followers = 125
     let posts = 321
@@ -13,16 +16,16 @@ export const TrendingPage = () => {
                 <div className='side-bar'>
                     <div className='personal-data'>
                         <img className='profile-img'
-                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
+                        src={context.photo}
                         alt="profile-photo"
                         />
-                        <h2>Rakhesh B.</h2>
-                        <p>Photographer Ctg. Bangladesh</p>
+                        <h2>@{context.userName}</h2>
+                        <p>{context.bio}</p>
 
                         <ul>
-                            <li className='li-border'>{followers}<span>{followers === 1 ? "FOLLOWER" : "FOLLOWERS"}</span></li>
-                            <li className='li-border'>150<span>FOLLOWING</span></li>
-                            <li>{posts}<span>{posts === 1 ? "POST" : "POSTS"}</span></li>
+                            <li className='li-border'>{context.followers}<span>{context.followers === 1 ? "FOLLOWER" : "FOLLOWERS"}</span></li>
+                            <li className='li-border'>{context.following}<span>FOLLOWING</span></li>
+                            <li>{context.posts}<span>{context.posts === 1 ? "POST" : "POSTS"}</span></li>
                         </ul>
                     </div>
                     <div className='nav-part'>

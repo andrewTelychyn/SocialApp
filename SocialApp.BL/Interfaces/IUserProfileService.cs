@@ -14,5 +14,7 @@ namespace SocialApp.BL.Interfaces
         Task<OperationDetails> Subscribe(string Id, string whomId);
 
         Task<OperationDetails> GetSubscribers(string Id);
+
+        OperationDetails UpdateProfile(UserDTO userDTO);
     }
 }

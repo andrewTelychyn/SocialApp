@@ -14,9 +14,6 @@ export const ProfilePage = () => {
 
     const [followStyle, setFollowStyle] = useState({backgroundColor: grey, color: green, content: "FOLLOW"})
     const [doFollow, setDoFollow] = useState(false)
-
-    let followers = 125
-    let posts = 321
     
     const followClickHandler = () => {
         if(doFollow)
@@ -37,15 +34,15 @@ export const ProfilePage = () => {
                     {!isMyProfile &&
                     <div className='personal-data'>
                         <img className='profile-img'
-                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
+                        src={auth.photo}
                         alt="profile-photo"
                         />
-                        <h2>Rakhesh B.</h2>
-                        <p>Photographer Ctg. Bangladesh</p>
+                        <h2>@{auth.userName}</h2>
+                        <p>{auth.bio}</p>
                         <ul>
-                            <li className='li-border'>{followers}<span>{followers === 1 ? "FOLLOWER" : "FOLLOWERS"}</span></li>
-                            <li className='li-border'>150<span>FOLLOWING</span></li>
-                            <li>{posts}<span>{posts === 1 ? "POST" : "POSTS"}</span></li>
+                            <li className='li-border'>{auth.followers}<span>{auth.followers === 1 ? "FOLLOWER" : "FOLLOWERS"}</span></li>
+                            <li className='li-border'>{auth.following}<span>FOLLOWING</span></li>
+                            <li>{auth.posts}<span>{auth.posts === 1 ? "POST" : "POSTS"}</span></li>
                         </ul>
                     </div>
                     }
@@ -69,7 +66,7 @@ export const ProfilePage = () => {
                     <div className='profile-details'>
                         <div className='image-body'>
                             <img className='profile-img'
-                            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
+                            src={auth.photo}
                             alt="profile-photo"
                             />
                             {isMyProfile
@@ -88,13 +85,13 @@ export const ProfilePage = () => {
                         </div>
                         <div className='bio-body'>
                             <div className="name-body">
-                                <h2>Rakhesh B.</h2>
-                                <p>Photographer Ctg. Bangladesh</p>
+                                <h2>@{auth.userName}</h2>
+                                <p>{auth.bio}</p>
                             </div>
                             <ul className='ul-profile'>
-                                <li><span>125</span> FOLLOWERS</li>
-                                <li><span>150</span> FOLLOWING</li>
-                                <li><span>321</span> POSTS</li>
+                                <li><span>{auth.followers}</span> FOLLOWERS</li>
+                                <li><span>{auth.following}</span> FOLLOWING</li>
+                                <li><span>{auth.posts}</span> POSTS</li>
                                 <hr/>
                                 <li><span>05.2021</span> REGISTERED</li>
                                 <hr/>

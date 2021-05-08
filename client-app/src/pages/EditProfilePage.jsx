@@ -1,12 +1,21 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useContext} from 'react'
+import { AuthContext } from '../context/AuthContext'
 import {NavLink} from 'react-router-dom'
+import { useHttp } from '../hooks/http.hook'
+import { useHistory } from "react-router-dom";
 
 export const EditProfilePage = () => {
+    const history = useHistory()
+    const context = useContext(AuthContext)
 
-
+    const {request} = useHttp()
     const [imageHover, setImageHover] = useState(false)
-    const [imageSrc, setImageSrc] = useState("https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80")
-    const [profileData, setProfileDate] = useState({Bio: "Just chillin", Name:"Ivan", Email:'endriktel@gmail.com' })
+    const [profileData, setProfileDate] = useState({
+        Id: context.userId,
+        Bio: context.bio, 
+        Name: context.userName, 
+        Email: context.email, 
+        Photo: context.photo})
 
     const inputFile = useRef(null)
 
@@ -22,7 +31,10 @@ export const EditProfilePage = () => {
         reader.readAsDataURL(file)
 
         reader.onloadend = () => {
-            setImageSrc(reader.result)
+            setProfileDate({...profileData, Photo: reader.result})
+            context.photo = reader.result
+            console.log(reader.result)
+            console.log(reader.result.split(',')[1])
         }
     }
 
@@ -34,8 +46,17 @@ export const EditProfilePage = () => {
     const onFileButtonClick = () => {
         // `current` points to the mounted file input element
        inputFile.current.click();
-      };
+    };
 
+    const submit = async () => {
+        try {
+            await request('/api/user/update', 'POST', {...profileData, Photo: profileData.Photo.split(',')[1]})
+            history.push('/home')
+            console.log('nope')
+        } catch (e) {
+            
+        }
+    }
 
     return (
         <div className='container'>
@@ -46,7 +67,7 @@ export const EditProfilePage = () => {
                 onClick={onFileButtonClick}
                 >
                     <img className='profile-img'
-                    src={imageSrc}
+                    src={profileData.Photo}
                     alt="profile-photo"
                     />
                     {imageHover &&
@@ -66,11 +87,11 @@ export const EditProfilePage = () => {
                 </div>
                 <div className='form-group'>
                     <label htmlFor="input-bio">BIO</label>
-                    <textarea id='input-bio' maxlength="75" Name='Bio' value={profileData.Bio} onChange={onChange}></textarea>
+                    <textarea id='input-bio' maxLength="75" Name='Bio' value={profileData.Bio} onChange={onChange}></textarea>
                 </div>
                 <div className='button-group'>
                     <NavLink to='/profile'>BACK</NavLink>
-                    <a>SUBMIT</a>
+                    <a onClick={submit}>SUBMIT</a>
                 </div>
             </div>
         </div>

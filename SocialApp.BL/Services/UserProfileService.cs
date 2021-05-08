@@ -20,6 +20,34 @@ namespace SocialApp.BL.Services
             database = uow;
         }
 
+        public async Task<OperationDetails> GetUser(string Id)
+        {
+            try
+            {
+                var user = await database.UserProfiles.GetItemAsync(Id);
+
+                if (user == null)
+                    return new OperationDetails(false, "User doesn't exists");
+
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserProfile, UserDTO>()).CreateMapper();
+                var obj = mapper.Map<UserProfile, UserDTO>(user);
+
+                return new OperationDetails(true, "Success", null, 
+                new {
+                    UserName = user.Name, 
+                    Photo = "data:image/jpeg;base64," + Convert.ToBase64String(user.Photo), 
+                    Bio = user.Bio,
+                    Email = user.ApplicationUser.Email,
+                    Posts = user.Posts.Count,
+                    Followers = user.Subscriptions.Count,
+                    Following = user.Subscribers.Count
+                    });
+            }
+            catch (Exception e)
+            {
+                return new OperationDetails(false, e.Message);
+            }
+        }
         public async Task<OperationDetails> GetSubscribers(string Id)
         {
             try
@@ -43,24 +71,6 @@ namespace SocialApp.BL.Services
             }
         }
 
-        public async Task<OperationDetails> GetUser(string Id)
-        {
-            try
-            {
-                var user = await database.UserProfiles.GetItemAsync(Id);
-
-                if (user == null)
-                    return new OperationDetails(false, "User doesn't exists");
-
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserProfile, UserDTO>()).CreateMapper();
-
-                return new OperationDetails(true, "Success", null, mapper.Map<UserProfile, UserDTO>(user));
-            }
-            catch (Exception e)
-            {
-                return new OperationDetails(false, e.Message);
-            }
-        }
 
         public async Task<OperationDetails> Subscribe(string Id, string whomId)
         {
@@ -98,5 +108,35 @@ namespace SocialApp.BL.Services
                 return new OperationDetails(false, ex.Message);
             }
         }
+
+        public OperationDetails UpdateProfile(UserDTO userDTO)
+        {
+            try
+            {
+                var mapperProfile = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<UserDTO, UserProfile>()
+                    .ForMember(dto => dto.Photo, profile => profile.MapFrom(src => Convert.FromBase64String(src.Photo)));
+                }).CreateMapper();
+
+                var mapperApplication = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, ApplicationUser>()).CreateMapper();
+
+                var userProfile = mapperProfile.Map<UserDTO, UserProfile>(userDTO);
+                var applicationUser = mapperApplication.Map<UserDTO, ApplicationUser>(userDTO);
+
+                if(userProfile == null || applicationUser == null)
+                    return new OperationDetails(false, "Failed transforming object");
+
+                database.UserProfiles.Update(userProfile);
+                database.UserStore.Update(applicationUser);
+                database.Commit();
+
+                return new OperationDetails(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new OperationDetails(false, e.Message);
+            }
+        }
+
     }
 }

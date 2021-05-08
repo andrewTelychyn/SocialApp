@@ -22,7 +22,9 @@ export const LoginPage = () => {
             const data = await request('/api/login', "POST", {...form})
             auth.login(data.token, data.userId)
         } 
-        catch (e) {}
+        catch (e) {
+            setForm({Email:'', Password:''})
+        }
     }
 
     return(
@@ -37,8 +39,8 @@ export const LoginPage = () => {
                 </div>
                 <div className='input-part right-borders'>
                     <h2>Sing in to BitterSweet</h2>
-                    <input type="email" placeholder='Email' Name="Email" required onChange={changeHandler}/>
-                    <input type="password" placeholder='Password' Name="Password" maxlength="15"  required onChange={changeHandler}/>
+                    <input type="email" value={form.Email} placeholder='Email' Name="Email" required onChange={changeHandler}/>
+                    <input type="password" value={form.Password} placeholder='Password' Name="Password" maxlength="15"  required onChange={changeHandler}/>
                     <input type="submit" value='SIGN IN' onClick={loginHandler}/>
                 </div>
             </div>

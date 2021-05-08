@@ -33,5 +33,11 @@ namespace SocialApp.DA.Repositories
             return context.ApplicationUsers.FirstOrDefault(u => u.Email == name);
             //return await context.ApplicationUsers.FindAsync(name);
         }
+
+        public void Update(ApplicationUser item)
+        {
+            context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+            context.ApplicationUsers.Update(item);
+        }
     }
 }

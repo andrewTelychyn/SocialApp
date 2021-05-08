@@ -72,7 +72,7 @@ namespace SocialApp.BL.Services
                 {
                     Id = user.Id,
                     Bio = item.Bio,
-                    Photo = item.Photo,
+                    Photo = Convert.FromBase64String(item.Photo),
                     Name = item.Name,
                     ApplicationUser = user
                 };

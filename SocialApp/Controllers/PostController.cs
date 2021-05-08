@@ -4,36 +4,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SocialApp.BL.Interfaces;
+using SocialApp.BL.BusinessModels;
+using SocialApp.BL.DTO;
 
 namespace SocialApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class PostController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+         private readonly IPostService service;
 
-        private readonly ILogger<PostController> _logger;
-
-        public PostController(ILogger<PostController> logger)
+        public PostController(IPostService service)
         {
-            _logger = logger;
+            this.service = service;
         }
 
-        //[HttpGet]
-        //public IEnumerable<WeatherForecast> Get()
-        //{
-        //    var rng = new Random();
-        //    return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        //    {
-        //        Date = DateTime.Now.AddDays(index),
-        //        TemperatureC = rng.Next(-20, 55),
-        //        Summary = Summaries[rng.Next(Summaries.Length)]
-        //    })
-        //    .ToArray();
-        //}
+        [HttpPost]
+        [Route("create")]
+        public async Task<IActionResult> Create(PostDTO postDTO)
+        {
+            var result = await service.CreatePost(postDTO);
+
+            if(!result.Succedeed)
+            {
+                return BadRequest(result.Message);
+            }
+            System.Console.WriteLine("post creating success");
+            return Ok();
+        }
     }
 }

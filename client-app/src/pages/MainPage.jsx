@@ -1,12 +1,58 @@
-import React from 'react'
+import React, {useEffect, useContext, useState} from 'react'
 import {NavLink} from 'react-router-dom'
 import {Post} from '../components/Post'
+import {AuthContext} from '../context/AuthContext'
+import { useHttp } from '../hooks/http.hook'
+const path = require('path')
 
 export const MainPage = () => {
 
-    let followers = 125
-    let posts = 321
+    //src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
     
+    let {request} = useHttp()
+    let context = useContext(AuthContext)
+
+    const [loaded, setLoaded] = useState(false)
+    const [postForm, setPostForm] = useState({Content: '', UserId: context.userId})
+    const [posts, setPosts] = useState([])
+
+    const onPostChange = (event) => {
+        setPostForm({...postForm, [event.target.name]: event.target.value})
+    }
+
+    const confirmPost = async () => {
+        try {
+            await request('/api/post/create', 'POST', {...postForm})
+            setPostForm({...postForm, Content:''})
+        } catch (e) {
+            
+        }
+    }
+
+    useEffect(() => {
+        const getdata = async () => {
+            try {
+                const data = await request('api/user/getprofile', 'POST', {Id:context.userId})
+                
+                if(data) {
+                    context.bio = data.bio
+                    context.email = data.email
+                    context.userName = data.userName
+                    context.photo = data.photo
+                    
+                    context.posts = data.posts
+                    context.followers = data.followers
+                    context.following = data.following
+                    
+                    setLoaded(true)
+                }
+            } catch (e) {
+                console.log(e.message)
+            }
+        }
+        getdata()
+
+    }, [])
 
     return(
         <div className='container'>
@@ -14,16 +60,16 @@ export const MainPage = () => {
                 <div className='side-bar'>
                     <div className='personal-data'>
                         <img className='profile-img'
-                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
+                        src={context.photo}
                         alt="profile-photo"
                         />
-                        <h2>Rakhesh B.</h2>
-                        <p>Photographer Ctg. Bangladesh</p>
+                        <h2>@{context.userName}</h2>
+                        <p>{context.bio}</p>
 
                         <ul>
-                            <li className='li-border'>{followers}<span>{followers === 1 ? "FOLLOWER" : "FOLLOWERS"}</span></li>
-                            <li className='li-border'>150<span>FOLLOWING</span></li>
-                            <li>{posts}<span>{posts === 1 ? "POST" : "POSTS"}</span></li>
+                            <li className='li-border'>{context.followers}<span>{context.followers === 1 ? "FOLLOWER" : "FOLLOWERS"}</span></li>
+                            <li className='li-border'>{context.following}<span>FOLLOWING</span></li>
+                            <li>{context.posts}<span>{context.posts === 1 ? "POST" : "POSTS"}</span></li>
                         </ul>
                     </div>
                     <div className='nav-part'>
@@ -43,7 +89,13 @@ export const MainPage = () => {
                 </div>
                 <div className='main-part'>
                     <h2>Uploads</h2>
+                    <div className='input-post'>
+                        <span>@{context.userName}</span>
+                        <input type="text" value={postForm.Content} Name='Content' onChange={onPostChange}/>
+                        <p onClick={confirmPost}>SUBMIT</p>
+                    </div>
                     <div className='posts'>
+                        <h3>Recent posts</h3>
                         <Post/>
                     </div>
                 </div>

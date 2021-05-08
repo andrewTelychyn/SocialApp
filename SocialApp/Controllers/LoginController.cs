@@ -47,8 +47,12 @@ namespace SocialApp.Controllers
             var result = service.Authenticate(user);
 
             if (!result.Succedeed)
+            {
+                System.Console.WriteLine("Authentication failed");
                 return BadRequest(result.Message);
+            }
 
+            System.Console.WriteLine("Authentication success");
             return new OkObjectResult(result.Object);
         }
     }

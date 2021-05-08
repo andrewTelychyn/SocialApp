@@ -43,6 +43,7 @@ namespace SocialApp.DA.Repositories
 
         public void Update(UserProfile item)
         {
+            context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
             context.UserProfiles.Update(item);
         }
 

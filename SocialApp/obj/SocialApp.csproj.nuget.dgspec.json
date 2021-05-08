@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Programming\\.NET\\SocialApp\\SocialApp\\SocialApp.csproj": {}
+    "D:\\Programming\\.NET\\SocialApp\\socialapp\\SocialApp.csproj": {}
   },
   "projects": {
     "D:\\Programming\\.NET\\SocialApp\\SocialApp.BL\\SocialApp.BL.csproj": {
@@ -172,14 +172,14 @@
         }
       }
     },
-    "D:\\Programming\\.NET\\SocialApp\\SocialApp\\SocialApp.csproj": {
+    "D:\\Programming\\.NET\\SocialApp\\socialapp\\SocialApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Programming\\.NET\\SocialApp\\SocialApp\\SocialApp.csproj",
+        "projectUniqueName": "D:\\Programming\\.NET\\SocialApp\\socialapp\\SocialApp.csproj",
         "projectName": "SocialApp",
-        "projectPath": "D:\\Programming\\.NET\\SocialApp\\SocialApp\\SocialApp.csproj",
+        "projectPath": "D:\\Programming\\.NET\\SocialApp\\socialapp\\SocialApp.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\Programming\\.NET\\SocialApp\\SocialApp\\obj\\",
+        "outputPath": "D:\\Programming\\.NET\\SocialApp\\socialapp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

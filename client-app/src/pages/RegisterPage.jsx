@@ -7,13 +7,14 @@ export const RegisterPage = () => {
 
     const {request} = useHttp()
     const auth = useContext(AuthContext)
+    const path = require('path')
 
-    let [form, setForm] = useState({Email:'', Password:'', Bio: '', Name:''})
+    let [form, setForm] = useState({Email:'', Password:'', Bio: '', Name:'', Photo: ''})
     let [confirmPassword, setConfirmPassword] = useState('');
 
 
     const changeHandler = (event) => {
-        setForm({...form, [event.target.name]: event.target.value})        
+        setForm({...form, [event.target.name]: event.target.value})          
     }
 
     const confirmPasswordHandler = (event) => {
@@ -25,14 +26,33 @@ export const RegisterPage = () => {
         try {
             if(form.Password === confirmPassword)
             {
+                const data2 = await fetch("https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/vprojectold1-tang-1474_2.jpg?w=1300&dpr=1&fit=default&crop=default&q=80&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=3ad8d7f89ccaa68eb265d67c62a1def0")
+                const blob = await data2.blob()
+
+                var reader = new FileReader()
+                reader.readAsDataURL(blob)
+
+                
+
+                reader.onloadend = () => {
+                    setForm({...form, Photo: reader.result.split(',')[1]})  
+                }
+
                 const data = await request('api/login/register', 'POST', {...form})
+                console.log(data)
+
                 if(data)
                 {
                     //data should already have id and token 
                     auth.login(data.token, data.userId)
                 }
             }
-        } catch (e) {}
+        } catch (e) {
+            console.log(e.message)
+            setForm({Email:'', Password:'', Bio: '', Name:''})
+            setConfirmPassword('');
+
+        }
     }
 
     return(
@@ -40,11 +60,11 @@ export const RegisterPage = () => {
             <div className='wrapper'>
                 <div className='input-part left-borders'>
                     <h2>Create account</h2>
-                    <input type="text" placeholder='User Name' Name='Name' required onChange={changeHandler}/>
-                    <input type="email" placeholder='Email' Name='Email' required onChange={changeHandler}/>
-                    <textarea placeholder="Bio" maxlength="75" Name='Bio' onChange={changeHandler}></textarea>
-                    <input type="password" placeholder='Password' maxlength="15" Name='Password' required onChange={changeHandler}/>
-                    <input type="password" placeholder='Confirm Password' maxlength="15" onChange={confirmPasswordHandler} required/>
+                    <input type="text" value={form.Name} placeholder='User Name' Name='Name' required onChange={changeHandler}/>
+                    <input type="email" value={form.Email} placeholder='Email' Name='Email' required onChange={changeHandler}/>
+                    <textarea placeholder="Bio" value={form.Bio} maxlength="75" Name='Bio' onChange={changeHandler}></textarea>
+                    <input type="password" value={form.Password} placeholder='Password' maxlength="15" Name='Password' required onChange={changeHandler}/>
+                    <input type="password"value={confirmPassword} placeholder='Confirm Password' maxlength="15" onChange={confirmPasswordHandler} required/>
                     <input type="submit" value='SIGN UP' onClick={registerHandler}/>
                 </div>
                 <div className='hello-part right-borders'>

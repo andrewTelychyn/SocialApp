@@ -14,5 +14,7 @@ namespace SocialApp.DA.Interfaces
 
         T FindByName(string name);
 
+        void Update(T item);
+
     }
 }
