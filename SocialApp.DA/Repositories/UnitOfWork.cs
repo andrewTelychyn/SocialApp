@@ -20,6 +20,8 @@ namespace SocialApp.DA.Repositories
 
         private UserRepository _userRepository;
 
+        private LikeRepository _likeRepository;
+
         private readonly ApplicationDbContext _applicationDbContext;
 
         private RoleStore _roleStore;
@@ -27,15 +29,21 @@ namespace SocialApp.DA.Repositories
         private UserStore _userStore;
 
 
-        public UnitOfWork(string connectingString)
+        public UnitOfWork(ApplicationDbContext context)
         {
-            _applicationDbContext = new ApplicationDbContext(connectingString);
-            //SeedData().GetAwaiter();
+            _applicationDbContext = context;
+            SeedData().GetAwaiter();
         }
 
+        public IRepository<Like> Likes
+        {
+            get
+            {
+                return _likeRepository ??= new LikeRepository(_applicationDbContext);
+            }
+        }
 
-
-        public IRepository<UserProfile> UserProfiles
+        public IDetachRepository<UserProfile> UserProfiles
         {
             get
             {
@@ -84,7 +92,7 @@ namespace SocialApp.DA.Repositories
         {
 
             _applicationDbContext.Database.Migrate();
-
+            System.Console.WriteLine("Migrating...");
 
             if (!(await _applicationDbContext.Roles.AnyAsync()))
             {

@@ -126,8 +126,8 @@ namespace SocialApp.BL.Services
                 if(userProfile == null || applicationUser == null)
                     return new OperationDetails(false, "Failed transforming object");
 
-                database.UserProfiles.Update(userProfile);
-                database.UserStore.Update(applicationUser);
+                database.UserProfiles.DetachLocal(userProfile, userProfile.Id);
+                database.UserStore.DetachLocal(applicationUser, applicationUser.Id);
                 database.Commit();
 
                 return new OperationDetails(true, "Success");

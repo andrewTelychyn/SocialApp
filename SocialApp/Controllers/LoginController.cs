@@ -48,7 +48,7 @@ namespace SocialApp.Controllers
 
             if (!result.Succedeed)
             {
-                System.Console.WriteLine("Authentication failed");
+                System.Console.WriteLine($"Authentication failed: {result.Message}");
                 return BadRequest(result.Message);
             }
 

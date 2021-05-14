@@ -1,0 +1,7 @@
+D:\Programming\.NET\SocialApp\SocialApp\obj\Release\netcoreapp3.1\win-x86\PubTmp\Out\appsettings.Development.json
+D:\Programming\.NET\SocialApp\SocialApp\obj\Release\netcoreapp3.1\win-x86\PubTmp\Out\appsettings.json
+D:\Programming\.NET\SocialApp\SocialApp\obj\Release\netcoreapp3.1\win-x86\PubTmp\Out\SocialApp.pdb
+D:\Programming\.NET\SocialApp\SocialApp\obj\Release\netcoreapp3.1\win-x86\PubTmp\Out\Microsoft.Data.SqlClient.SNI.pdb
+D:\Programming\.NET\SocialApp\SocialApp\obj\Release\netcoreapp3.1\win-x86\PubTmp\Out\SocialApp.BL.pdb
+D:\Programming\.NET\SocialApp\SocialApp\obj\Release\netcoreapp3.1\win-x86\PubTmp\Out\SocialApp.DA.pdb
+D:\Programming\.NET\SocialApp\SocialApp\obj\Release\netcoreapp3.1\win-x86\PubTmp\Out\SocialApp.exe

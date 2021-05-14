@@ -15,10 +15,16 @@ namespace SocialApp.BL.Services
     public class PostService : IPostService
     {
         IUnitOfWork database { get; set; }
+        private IMapper mapper;
 
         public PostService(IUnitOfWork uow)
         {
             database = uow;
+
+            mapper = new MapperConfiguration(cfg => cfg.CreateMap<Post, PostDTO>().
+                    ForMember(post => post.UserId, dto => dto.MapFrom(src => src.UserProfileId)))
+                    //ForMember(post => post.LikesUserIds, dto => dto.MapFrom(src => src.Likes.Select(item => item.UserProfileId)))).
+                    .CreateMapper();
         }
 
 
@@ -46,7 +52,10 @@ namespace SocialApp.BL.Services
                 await database.Posts.CreateAsync(post);
                 database.Commit();
 
-                return new OperationDetails(true, "Successfully created");
+                item.UserName = user.Name;
+                item.Date = DateTime.Now;
+
+                return new OperationDetails(true, "Successfully created", null, item);
             }
             catch (Exception e)
             {
@@ -83,7 +92,7 @@ namespace SocialApp.BL.Services
                     return new OperationDetails(false, "There is no subscriptions"); 
 
                 var list = new List<PostDTO>();
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Post, PostDTO>()).CreateMapper();
+                //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Post, PostDTO>()).CreateMapper();
 
                 foreach (var userId in item.SubscriptionsUserIds)
                 {
@@ -108,15 +117,25 @@ namespace SocialApp.BL.Services
                     return new OperationDetails(false, "There is no subscriptions");
 
                 var list = new List<PostDTO>();
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Post, PostDTO>()).CreateMapper();
+                
 
-                list.AddRange(mapper.Map<ICollection<Post>, List<PostDTO>>(user.Posts));
+                list.AddRange(mapper.Map<ICollection<Post>, ICollection<PostDTO>>(user.Posts));
 
-                return new OperationDetails(true, "Success", null, list.OrderBy(d => d.Date));
+                for (int i = 0; i < list.Count; i++)
+                {
+                    list[i].UserName = database.UserProfiles.GetItemAsync(list[i].UserId).Result.Name;
+                    list[i].LikesUserIds = user.Posts.ToList()[i].Likes.Select(like => like.UserProfileId).ToList();
+                }
+
+                // foreach(var post in list) {
+                //     post.UserName = database.UserProfiles.GetItemAsync(post.UserId).Result.Name;
+                //     post.LikesUserIds = user.Posts.Select(item => item.Likes.Select(like => like.UserProfileId).ToList()).ToList();
+                // }
+                return new OperationDetails(true, "Success", null, list.OrderBy(d => d.Date).Reverse());
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return null;
+                return new OperationDetails(false, e.Message);
             }
         }
 
@@ -130,15 +149,32 @@ namespace SocialApp.BL.Services
                 if (post == null || user == null)
                     return new OperationDetails(false, "Post doesn't exists");
 
-                if (post.Likes.Contains(user))
+                bool found = false;
+                Like obj = new Like {Id =  new IdGenerator().Generate(), UserProfileId = userId, UserProfile = user};
+                
+                if(post.Likes == null)
+                    return new OperationDetails(false, "no likes");
+
+                foreach(var item in post.Likes)
                 {
-                    post.Likes.Remove(user);
+                    if(item.UserProfileId == userId)
+                    {
+                        found = true;
+                        obj = item;
+                        break;
+                    }
+                }
+
+                if (found)
+                {
+                    post.Likes.Remove(obj);
                     database.Posts.Update(post);
                     database.Commit();
+
                     return new OperationDetails(true, "Successfully removed like");
                 }
 
-                post.Likes.Add(user);
+                post.Likes.Add(obj);
                 database.Posts.Update(post);
                 database.Commit();
 

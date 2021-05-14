@@ -10,7 +10,7 @@ export const EditProfilePage = () => {
 
     const {request} = useHttp()
     const [imageHover, setImageHover] = useState(false)
-    const [profileData, setProfileDate] = useState({
+    const [profileData, setProfileData] = useState({
         Id: context.userId,
         Bio: context.bio, 
         Name: context.userName, 
@@ -20,21 +20,18 @@ export const EditProfilePage = () => {
     const inputFile = useRef(null)
 
     const onChange = (event) => {
-        setProfileDate({...profileData, [event.target.name]: event.target.value})
+        setProfileData({...profileData, [event.target.name]: event.target.value})
     }
 
     const onChangeFile = (event) => {
         let file = event.target.files[0]
 
-        console.log(file)
         var reader = new FileReader()
         reader.readAsDataURL(file)
 
         reader.onloadend = () => {
-            setProfileDate({...profileData, Photo: reader.result})
             context.photo = reader.result
-            console.log(reader.result)
-            console.log(reader.result.split(',')[1])
+            setProfileData({...profileData, Photo: reader.result})
         }
     }
 
@@ -50,9 +47,8 @@ export const EditProfilePage = () => {
 
     const submit = async () => {
         try {
-            await request('/api/user/update', 'POST', {...profileData, Photo: profileData.Photo.split(',')[1]})
+            const data = await request('/api/user/update', 'POST', {...profileData, Photo: profileData.Photo.split(',')[1]})
             history.push('/home')
-            console.log('nope')
         } catch (e) {
             
         }

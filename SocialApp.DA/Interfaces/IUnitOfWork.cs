@@ -13,11 +13,13 @@ namespace SocialApp.DA.Interfaces
 
         IStore<ApplicationUser> UserStore { get; }
 
-        IRepository<UserProfile> UserProfiles { get; }
+        IDetachRepository<UserProfile> UserProfiles { get; }
 
         IRepository<Comment> Comments { get; }
 
         IRepository<Post> Posts { get; }
+
+        IRepository<Like> Likes {get;}
 
         void Commit();
     }

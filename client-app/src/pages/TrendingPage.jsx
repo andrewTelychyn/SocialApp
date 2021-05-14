@@ -46,7 +46,7 @@ export const TrendingPage = () => {
                 <div className='main-part'>
                     <h2>Trending</h2>
                     <div className='posts'>
-                        <Post/>
+                        {/* <Post/> */}
                     </div>
                 </div>
             </div>

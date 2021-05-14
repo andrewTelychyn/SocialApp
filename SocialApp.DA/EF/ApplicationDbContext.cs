@@ -20,6 +20,7 @@ namespace SocialApp.DA.EF
             Database.EnsureCreated();
         }
 
+        public DbSet<Like> Likes {get; set;}
         
         public DbSet<Comment> Comments { get; set; }
 
@@ -44,7 +45,7 @@ namespace SocialApp.DA.EF
             {
                 entity.HasOne(p => p.UserProfile).WithMany(u => u.Posts).IsRequired();
 
-                //entity.HasMany(p => p.Likes).WithMany(u => u.Posts);
+                entity.HasMany(p => p.Likes);
 
                 entity.HasMany(p => p.Comments).WithOne(c => c.Post);
             });

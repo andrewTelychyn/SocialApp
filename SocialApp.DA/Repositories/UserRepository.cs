@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace SocialApp.DA.Repositories
 {
-    public class UserRepository : IRepository<UserProfile>
+    public class UserRepository : IDetachRepository<UserProfile>
     {
         private ApplicationDbContext context;
 
@@ -45,6 +47,16 @@ namespace SocialApp.DA.Repositories
         {
             context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
             context.UserProfiles.Update(item);
+        }
+
+        public void DetachLocal(UserProfile Item, string Id)
+        {
+            var local = context.UserProfiles.Local.ToList().FirstOrDefault(Item => Item.Id == Id);
+            if(local != null)
+            {
+                context.Entry(local).State = EntityState.Detached;
+            }
+            context.Entry(Item).State = EntityState.Modified;
         }
 
 

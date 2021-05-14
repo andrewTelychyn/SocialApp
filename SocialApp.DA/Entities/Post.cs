@@ -17,8 +17,9 @@ namespace SocialApp.DA.Entities
         public DateTime Date { get; set; } = DateTime.Now;
 
 
-        public virtual ICollection<UserProfile> Likes { get; set; } = new List<UserProfile>();
+        public virtual ICollection<Like> Likes { get; set; } = new List<Like>();
 
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
     }
 }

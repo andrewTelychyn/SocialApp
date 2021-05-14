@@ -3,6 +3,8 @@ import {BrowserRouter} from 'react-router-dom'
 import {AuthContext} from './context/AuthContext'
 import { useAuth } from './hooks/auth.hook'
 import {useRoute} from './routes'
+import {useData} from './hooks/getData.hook'
+
 
 function App() {
   const {login, logout, token, userId} = useAuth()

@@ -43,6 +43,7 @@ namespace SocialApp.DA.Repositories
 
         public void Update(Comment item)
         {
+            context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
             context.Comments.Update(item);
         }
 

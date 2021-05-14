@@ -45,7 +45,6 @@ namespace SocialApp.Controllers
         [Route("update")]
         public IActionResult Update(UserDTO userDTO)
         {
-            System.Console.WriteLine("hello");
             var result = service.UpdateProfile(userDTO);
 
             if (!result.Succedeed)
@@ -55,7 +54,7 @@ namespace SocialApp.Controllers
             }
 
             System.Console.WriteLine("Updating user success");
-            return Ok();
+            return new OkObjectResult(new {Message = "Updating user success"});
         }
 
         // GET: api/<UserController>

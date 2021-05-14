@@ -25,10 +25,10 @@ export const useRoute = (isAuthenticated) => {
                 <Route path="/trending" exact>
                     <TrendingPage/>
                 </Route>
-                <Route path="/comment/:id">
+                <Route path="comment/:id">
                     <CommentPage/>
                 </Route>
-                <Route path="/profile/:id">
+                <Route path="profile/:id">
                     <ProfilePage/>
                 </Route>
                 <Redirect to="/home"/>

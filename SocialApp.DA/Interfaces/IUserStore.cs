@@ -16,5 +16,6 @@ namespace SocialApp.DA.Interfaces
 
         void Update(T item);
 
+        void DetachLocal(T Item, string Id);
     }
 }

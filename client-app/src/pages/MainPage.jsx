@@ -22,7 +22,9 @@ export const MainPage = () => {
 
     const confirmPost = async () => {
         try {
-            await request('/api/post/create', 'POST', {...postForm})
+            var date = new Date(Date.now())
+            const data = await request('/api/post/create', 'POST', {...postForm, Date: date})
+            setPosts([data, ...posts])
             setPostForm({...postForm, Content:''})
         } catch (e) {
             
@@ -38,11 +40,13 @@ export const MainPage = () => {
                     context.bio = data.bio
                     context.email = data.email
                     context.userName = data.userName
-                    context.photo = data.photo
                     
                     context.posts = data.posts
                     context.followers = data.followers
                     context.following = data.following
+
+                    if(!(!!context.photo))
+                        context.photo = data.photo
                     
                     setLoaded(true)
                 }
@@ -50,8 +54,18 @@ export const MainPage = () => {
                 console.log(e.message)
             }
         }
+        const loadPosts = async () => {
+            try {
+                const data = await request('/api/post/get-user-posts', 'POST', {Id: context.userId})
+                
+                if(data) {
+                    console.log(data)
+                    setPosts(data)
+                }
+            } catch (e) {}
+        }
+        loadPosts()
         getdata()
-
     }, [])
 
     return(
@@ -96,7 +110,17 @@ export const MainPage = () => {
                     </div>
                     <div className='posts'>
                         <h3>Recent posts</h3>
-                        <Post/>
+                        {posts.map((item, index) => {
+                            return <Post 
+                            content={item.content} 
+                            id={item.id} 
+                            userId={item.userId} 
+                            likes={item.likesUserIds} 
+                            comments={item.commentsIds} 
+                            stringDate={item.date}
+                            userName={item.userName} 
+                            key={index}/>
+                        })}
                     </div>
                 </div>
             </div>

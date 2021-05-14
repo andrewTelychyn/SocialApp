@@ -4,7 +4,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_PublishTargetUrl>D:\Programming\.NET\SocialApp\SocialApp\bin\Release\netcoreapp3.1\publish\</_PublishTargetUrl>
-    <History>True|2021-04-19T16:30:22.4885700Z;</History>
+    <_PublishTargetUrl>D:\Documents and Files\KPI\3 РІК\.NET\labs\src</_PublishTargetUrl>
+    <History>True|2021-05-14T10:06:05.0848108Z;True|2021-04-19T19:30:22.4885700+03:00;</History>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
   </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Server=%28localdb%29\mssqllocaldb%3bDatabase=SocialAppDB%3bTrusted_Connection=True%3bMultipleActiveResultSets=true</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
 </Project>

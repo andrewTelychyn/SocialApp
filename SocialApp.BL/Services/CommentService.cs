@@ -10,6 +10,7 @@ using SocialApp.DA.Entities;
 using AutoMapper;
 using shortid;
 using shortid.Configuration;
+using System.Linq;
 
 namespace SocialApp.BL.Services
 {
@@ -103,15 +104,27 @@ namespace SocialApp.BL.Services
                 if (comment == null || user == null)
                     return new OperationDetails(false, "Comment doesn't exists");
 
-                if (comment.Likes.Contains(user))
+
+                bool found = false;
+                Like obj = new Like {Id =  new IdGenerator().Generate(), UserProfileId = userId, UserProfile = user};
+                foreach(var item in comment.Likes)
                 {
-                    comment.Likes.Remove(user);
+                    if(item.UserProfileId == userId)
+                    {
+                        found = true;
+                        obj = item;
+                    }
+                }
+
+                if (found)
+                {
+                    comment.Likes.Remove(obj);
                     database.Comments.Update(comment);
                     database.Commit();
                     return new OperationDetails(true, "Successfully removed like");
                 }
 
-                comment.Likes.Add(user);
+                comment.Likes.Add(obj);
                 database.Comments.Update(comment);
                 database.Commit();
 

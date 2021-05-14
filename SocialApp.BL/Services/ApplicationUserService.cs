@@ -67,7 +67,7 @@ namespace SocialApp.BL.Services
 
                 var hasher = new PasswordHasher();
                 user.PasswordHash = hasher.GetHash(item.Password);
-                 
+
                 UserProfile profile = new UserProfile
                 {
                     Id = user.Id,

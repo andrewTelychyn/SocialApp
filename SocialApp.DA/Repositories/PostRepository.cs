@@ -42,6 +42,7 @@ namespace SocialApp.DA.Repositories
 
         public void Update(Post item)
         {
+            context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
             context.Posts.Update(item);
         }
 

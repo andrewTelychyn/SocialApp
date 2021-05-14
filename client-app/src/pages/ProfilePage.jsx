@@ -1,19 +1,24 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useEffect, useCallback} from 'react'
 import {NavLink, useLocation} from 'react-router-dom'
 import {Post} from '../components/Post'
 import {AuthContext} from '../context/AuthContext'
+import {useHttp} from '../hooks/http.hook'
 
 export const ProfilePage = () => {
+
+    const {request} = useHttp()
 
     const grey = "#E1E1E2"
     const green = "#36B08F"
     const white = "#FEFEFE"
-
+    
     const auth = useContext(AuthContext)
     const isMyProfile = useLocation().pathname == '/profile' 
-
+    
     const [followStyle, setFollowStyle] = useState({backgroundColor: grey, color: green, content: "FOLLOW"})
     const [doFollow, setDoFollow] = useState(false)
+    
+    const [posts, setPosts] = useState([])
     
     const followClickHandler = () => {
         if(doFollow)
@@ -26,6 +31,25 @@ export const ProfilePage = () => {
             setFollowStyle({backgroundColor:green, color: white, content: "FOLLOWING"})
         }
     }
+    
+    const loadPosts = useCallback(async () => {
+        if(isMyProfile)
+        {
+            try {
+                const data = await request('/api/post/get-user-posts', 'POST', {Id: auth.userId})
+                
+                if(data) {
+                    console.log(data)
+                    setPosts(data)
+                }
+            } catch (e) {}
+        }
+    }, [auth.userId, request])
+    
+    
+    useEffect(()=>{
+        loadPosts()
+    }, [loadPosts])
 
     return(
         <div className='container'>
@@ -101,7 +125,17 @@ export const ProfilePage = () => {
                     </div>
                     <div className='posts'>
                         <h3>Recent posts</h3>
-                        <Post/>
+                        {posts.map((item, index) => {
+                            return <Post 
+                            content={item.content} 
+                            id={item.id} 
+                            userId={item.userId} 
+                            likes={item.likesUserIds} 
+                            comments={item.commentsIds} 
+                            stringDate={item.date}
+                            userName={item.userName} 
+                            key={index}/>
+                        })}
                     </div>
                 </div>
             </div>

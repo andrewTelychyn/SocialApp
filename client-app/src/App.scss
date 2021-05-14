@@ -50,8 +50,8 @@ textarea:focus, input:focus{
 
 .container {
     display: flex;
-    height: 100vh;
-    width: 100vw;
+    min-height: 100vh;
+    //min-width: 100vw;
     justify-content: center;
     align-items: center;
     background-image: url("./media/bg-1.jpg");
@@ -60,17 +60,19 @@ textarea:focus, input:focus{
 
 .wrapper {
     display: flex;
-    align-items: center;
+    //align-items: center;
     height: 70vh;
     width: 50vw;
     flex-direction: row;
     min-height: 400px;
+    margin: 50px 0;
 }
 
 .wrapper-bg {
     @extend .wrapper;
-    height: 80vh;
+    height: auto;
     width: 65vw;
+    min-width: 500px;
     min-height: 500px;
 }
 
@@ -80,6 +82,7 @@ textarea:focus, input:focus{
     width: 21vw;
     min-height: 650px;
     min-width: 300px;
+    align-items: center;
 }
 
 
@@ -177,11 +180,15 @@ textarea:focus, input:focus{
 .side-bar {
     min-width: 220px;
     background-color: $green-color;
-    width: 275px;
+    width: 27%;
     opacity: 0.95;
     border-radius: 3px;
-    height: 100%;
+    height: inherit;
     padding: 40px 0;
+
+    // min-width: 600px;
+    // width: 75%;
+    // height: 100%;
 
     position: relative;
 
@@ -238,7 +245,7 @@ textarea:focus, input:focus{
         //border:1px solid black;
 
         width: 78%;
-        position: absolute;
+        position: sticky;
         top: 334.5px;
 
         .icons {
@@ -289,7 +296,7 @@ textarea:focus, input:focus{
     min-width: 600px;
     background-color: $white-color;
     opacity: 0.9;
-    width: 75%;
+    width: 73%;
     height: 100%;
     color: $green-color;
     padding: 15px 30px;
@@ -319,6 +326,7 @@ textarea:focus, input:focus{
     padding: 6px 10px;
     border-radius: 5px;
     opacity: 1;
+    margin-bottom: 20px;
 
     span {
         display: block;

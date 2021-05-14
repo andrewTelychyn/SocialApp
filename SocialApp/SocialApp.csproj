@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>91f89a85-3104-4a9e-b44c-404c737d7408</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +15,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SocialApp.BL\SocialApp.BL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Labs\" />
   </ItemGroup>
 
 
