@@ -22,7 +22,7 @@ namespace SocialApp.BL.Services
             database = uow;
 
             mapper = new MapperConfiguration(cfg => cfg.CreateMap<Post, PostDTO>().
-                    ForMember(post => post.UserId, dto => dto.MapFrom(src => src.UserProfileId)))
+                    ForMember(dto => dto.UserId, conf => conf.MapFrom(src => src.UserProfileId)))
                     //ForMember(post => post.LikesUserIds, dto => dto.MapFrom(src => src.Likes.Select(item => item.UserProfileId)))).
                     .CreateMapper();
         }
@@ -48,12 +48,13 @@ namespace SocialApp.BL.Services
                 post.UserProfile = user;
 
                 user.Posts.Add(post);
-                database.UserProfiles.Update(user);
+                database.UserProfiles.Update(user, user.Id);
                 await database.Posts.CreateAsync(post);
-                database.Commit();
+                await database.Commit();
 
                 item.UserName = user.Name;
                 item.Date = DateTime.Now;
+                item.Id = id;
 
                 return new OperationDetails(true, "Successfully created", null, item);
             }
@@ -67,16 +68,16 @@ namespace SocialApp.BL.Services
         {
             try
             {
-                var post = await database .Posts.GetItemAsync(Id);
-
+                var post = await database.Posts.GetItemAsync(Id);
                 if(post == null)
                     return new OperationDetails(false, "Object doesn't exists");
 
 
                 database.Posts.Delete(post);
-                database.Commit();
 
-                return new OperationDetails(true, "Successfully created");
+                await database.Commit();
+
+                return new OperationDetails(true, "Successfully deleted");
             }
             catch (Exception e)
             {
@@ -88,18 +89,33 @@ namespace SocialApp.BL.Services
         {
             try
             {
-                if (item.SubscriptionsUserIds.Count == 0)
-                    return new OperationDetails(false, "There is no subscriptions"); 
+                var result = await GetUserPosts(item.Id);
+                if(!result.Succedeed)  return result;
 
-                var list = new List<PostDTO>();
-                //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Post, PostDTO>()).CreateMapper();
+                var list = new List<PostDTO>((List<PostDTO>)result.Object);
+
+                if (item.SubscriptionsUserIds == null || item.SubscriptionsUserIds.Count == 0)
+                    return new OperationDetails(true, "There is no subscriptions - only user posts", null, list); 
+
 
                 foreach (var userId in item.SubscriptionsUserIds)
                 {
-                    list.AddRange(mapper.Map<ICollection<Post>, List<PostDTO>>((await database.UserProfiles.GetItemAsync(userId)).Posts));
+                    var smallerList = new List<PostDTO>();
+
+                    var posts = (await database.UserProfiles.GetItemAsync(userId)).Posts.ToList();
+                    smallerList.AddRange(mapper.Map<ICollection<Post>, List<PostDTO>>(posts));
+
+                    for(int i = 0; i < smallerList.Count; i++)
+                    {
+                        smallerList[i].UserName = database.UserProfiles.GetItemAsync(smallerList[i].UserId).Result.Name;
+                        smallerList[i].LikesUserIds = posts[i].Likes.Select(like => like.UserProfileId).ToList();
+                        smallerList[i].CommentsIds = posts[i].Comments.Select(comment => comment.UserProfileId).ToList();
+                    }
+
+                    list.AddRange(smallerList);
                 }
 
-                return new OperationDetails(true, "Success", null, list.OrderBy(d => d.Date));
+                return new OperationDetails(true, "Success", null, list.OrderBy(d => d.Date).Reverse());
             }
             catch (Exception e)
             {
@@ -117,21 +133,18 @@ namespace SocialApp.BL.Services
                     return new OperationDetails(false, "There is no subscriptions");
 
                 var list = new List<PostDTO>();
-                
+                var posts = user.Posts.ToList();
 
                 list.AddRange(mapper.Map<ICollection<Post>, ICollection<PostDTO>>(user.Posts));
 
                 for (int i = 0; i < list.Count; i++)
                 {
                     list[i].UserName = database.UserProfiles.GetItemAsync(list[i].UserId).Result.Name;
-                    list[i].LikesUserIds = user.Posts.ToList()[i].Likes.Select(like => like.UserProfileId).ToList();
+                    list[i].LikesUserIds = posts[i].Likes.Select(like => like.UserProfileId).ToList();
+                    list[i].CommentsIds = posts[i].Comments.Select(comment => comment.UserProfileId).ToList();
                 }
-
-                // foreach(var post in list) {
-                //     post.UserName = database.UserProfiles.GetItemAsync(post.UserId).Result.Name;
-                //     post.LikesUserIds = user.Posts.Select(item => item.Likes.Select(like => like.UserProfileId).ToList()).ToList();
-                // }
-                return new OperationDetails(true, "Success", null, list.OrderBy(d => d.Date).Reverse());
+                
+                return new OperationDetails(true, "Success", null, list.OrderBy(d => d.Date).Reverse().ToList());
             }
             catch (Exception e)
             {
@@ -168,19 +181,72 @@ namespace SocialApp.BL.Services
                 if (found)
                 {
                     post.Likes.Remove(obj);
-                    database.Posts.Update(post);
-                    database.Commit();
+                    database.Posts.Update(post, post.Id);
+                    await database.Commit();
 
                     return new OperationDetails(true, "Successfully removed like");
                 }
 
                 post.Likes.Add(obj);
-                database.Posts.Update(post);
-                database.Commit();
+                database.Posts.Update(post, post.Id);
+                await database.Commit();
 
                 return new OperationDetails(true, "Successfully added like");
             }
             catch (Exception e)
+            {
+                return new OperationDetails(false, e.Message);
+            }
+        }
+
+        public async Task<OperationDetails> GetOnePost(string Id)
+        {
+            try
+            {
+                var post = await database.Posts.GetItemAsync(Id);
+                var postDTO = mapper.Map<Post, PostDTO>(post);
+
+                if (postDTO == null)
+                    return new OperationDetails(false, "Post doesn't exists");
+                
+                postDTO.UserName = database.UserProfiles.GetItemAsync(postDTO.UserId).Result.Name;
+                postDTO.LikesUserIds = post.Likes.Select(like => like.UserProfileId).ToList();
+                postDTO.CommentsIds = post.Comments.Select(comment => comment.UserProfileId).ToList();
+
+
+                return new OperationDetails(true, "Success", null, postDTO);
+            }
+            catch (Exception e)
+            {
+                return new OperationDetails(false, e.Message);
+            }
+        }
+
+        public OperationDetails GetTrending()
+        {
+            try
+            {
+                var posts = database.Posts.GetAllAsync().ToList();
+
+                if(posts == null || posts.Count() == 0)
+                    return new OperationDetails(false, "There is no posts");
+
+                var list = new List<PostDTO>();
+                list.AddRange(mapper.Map<List<Post>, ICollection<PostDTO>>(posts));
+
+                for(int i = 0; i < list.Count; i++)
+                {
+                    list[i].UserName = database.UserProfiles.GetItemAsync(list[i].UserId).Result.Name;
+                    list[i].LikesUserIds = posts[i].Likes.Select(like => like.UserProfileId).ToList();
+                    list[i].CommentsIds = posts[i].Comments.Select(comment => comment.UserProfileId).ToList();
+                }
+
+                var now = DateTime.Now.AddDays(-7);
+                list = list.Where(p => p.Date.CompareTo(now) > 0).ToList();
+
+                return new OperationDetails(true, "Success", null, list.OrderBy(p => p.LikesUserIds.Count).ThenBy(p => p.CommentsIds.Count).Reverse());
+            }
+            catch (System.Exception e)
             {
                 return new OperationDetails(false, e.Message);
             }

@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace SocialApp.DA.Repositories
 {
@@ -35,15 +37,19 @@ namespace SocialApp.DA.Repositories
             return await context.Likes.FindAsync(id);
         }
 
-        public IEnumerable<Like> GetAll()
+        public IEnumerable<Like> GetAllAsync()
         {
-            return context.Likes;
+            return context.Likes.ToList();
         }
 
-        public void Update(Like item)
+        public void Update(Like Item, string Id)
         {
-            context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
-            context.Likes.Update(item);
+            var local = context.UserProfiles.Local.FirstOrDefault(Item => Item.Id == Id);
+            if(local != null)
+            {
+                context.Entry(local).State = EntityState.Detached;
+            }
+            context.Entry(Item).State = EntityState.Modified;
         }
 
 

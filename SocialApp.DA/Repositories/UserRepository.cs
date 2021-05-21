@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace SocialApp.DA.Repositories
 {
-    public class UserRepository : IDetachRepository<UserProfile>
+    public class UserRepository : IRepository<UserProfile>
     {
         private ApplicationDbContext context;
 
@@ -38,20 +38,14 @@ namespace SocialApp.DA.Repositories
             return await context.UserProfiles.FindAsync(id);
         }
 
-        public IEnumerable<UserProfile> GetAll()
+        public IEnumerable<UserProfile> GetAllAsync()
         {
-            return context.UserProfiles;
+            return context.UserProfiles.ToList();
         }
 
-        public void Update(UserProfile item)
+        public void Update(UserProfile Item, string Id)
         {
-            context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
-            context.UserProfiles.Update(item);
-        }
-
-        public void DetachLocal(UserProfile Item, string Id)
-        {
-            var local = context.UserProfiles.Local.ToList().FirstOrDefault(Item => Item.Id == Id);
+            var local = context.UserProfiles.Local.FirstOrDefault(Item => Item.Id == Id);
             if(local != null)
             {
                 context.Entry(local).State = EntityState.Detached;

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "eVXkgo4kb08OvMgbDwB4O/QmTvZojOedjJw3n+SgxjQ5GkiIKuzAiYClI3BuPmGZslq7qTDFkbDzuypsrid65Q==",
+  "dgSpecHash": "Z/2ywN0toLpmnWxgRCw6nk3vVhNDy3HgI2dhe4q2T+KsPYPbXZm/NhxJb6iNg1r7lF6nP5qIHP3VlO9pPD2TEA==",
   "success": true,
-  "projectFilePath": "D:\\Programming\\.NET\\SocialApp\\socialapp\\SocialApp.csproj",
+  "projectFilePath": "D:\\Programming\\.NET\\SocialApp\\SocialApp\\SocialApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",

@@ -43,7 +43,7 @@ namespace SocialApp.DA.Repositories
             }
         }
 
-        public IDetachRepository<UserProfile> UserProfiles
+        public IRepository<UserProfile> UserProfiles
         {
             get
             {
@@ -83,9 +83,9 @@ namespace SocialApp.DA.Repositories
             }
         }
 
-        public void Commit()
+        public async Task Commit()
         {
-            _applicationDbContext.SaveChanges();
+            await _applicationDbContext.SaveChangesAsync();
         }
 
         private async Task SeedData()
@@ -105,7 +105,7 @@ namespace SocialApp.DA.Repositories
                     if (role == null)
                         await RoleStore.CreateAsync(new ApplicationRole { Name = roleName });
                 }
-                Commit();
+                await Commit();
             }
 
             if (!(await _applicationDbContext.ApplicationUsers.AnyAsync()))
@@ -127,7 +127,7 @@ namespace SocialApp.DA.Repositories
                 _applicationDbContext.UserProfiles.Add(user);
                 _applicationDbContext.ApplicationUsers.Add(adminBody);
 
-                Commit();
+                await Commit();
             }
         }
     }

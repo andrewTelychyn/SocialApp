@@ -9,12 +9,12 @@ namespace SocialApp.DA.Interfaces
     {
         Task CreateAsync(T item);
 
-        void Update(T item);
+        void Update(T Item, string Id);
 
         void Delete(T item);
 
         Task<T> GetItemAsync(string Id);
 
-        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAllAsync();
     }
 }

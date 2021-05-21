@@ -36,20 +36,14 @@ namespace SocialApp.DA.Repositories
             //return await context.ApplicationUsers.FindAsync(name);
         }
 
-        public void Update(ApplicationUser item)
+        public void Update(ApplicationUser item, string Id)
         {
-            context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
-            context.ApplicationUsers.Update(item);
-        }
-
-        public void DetachLocal(ApplicationUser Item, string Id)
-        {
-            var local = context.ApplicationUsers.Local.ToList().FirstOrDefault(Item => Item.Id == Id);
+            var local = context.ApplicationUsers.Local.ToList().FirstOrDefault(item => item.Id == Id);
             if(local != null)
             {
                 context.Entry(local).State = EntityState.Detached;
             }
-            context.Entry(Item).State = EntityState.Modified;
+            context.Entry(item).State = EntityState.Modified;
         }
     }
 }

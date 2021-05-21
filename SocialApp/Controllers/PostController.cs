@@ -39,9 +39,9 @@ namespace SocialApp.Controllers
 
         [HttpPost]
         [Route("get-user-posts")]
-        public async Task<IActionResult> GetUserPosts(UserDTO userDTO)
+        public async Task<IActionResult> GetUserPosts(PostDTO postDTO)
         {
-            var result = await service.GetUserPosts(userDTO.Id);
+            var result = await service.GetUserPosts(postDTO.UserId);
 
             if(!result.Succedeed)
             {
@@ -63,6 +63,69 @@ namespace SocialApp.Controllers
             if(!result.Succedeed)
             {
                 System.Console.WriteLine("liking posts failed");
+                System.Console.WriteLine(result.Message);
+                return BadRequest(result.Message);
+            }
+
+            System.Console.WriteLine(result.Message);
+            return new OkObjectResult(new {Message = result.Message});
+        }
+
+        [HttpPost]
+        [Route("get-one-post")]
+        public async Task<IActionResult> GetOnePost(PostDTO postDTO)
+        {
+            var result = await service.GetOnePost(postDTO.Id);
+
+            if(!result.Succedeed)
+            {
+                System.Console.WriteLine(result.Message);
+                return BadRequest(result.Message);
+            }
+
+            return new OkObjectResult(result.Object);
+        }
+
+        [HttpPost]
+        [Route("get-uploads-posts")]
+        public async Task<IActionResult> GetUploadsPosts(UserDTO userDTO)
+        {
+            var result = await service.GetSubscriptionPosts(userDTO);
+
+            if(!result.Succedeed)
+            {
+                System.Console.WriteLine(result.Message);
+                return BadRequest(result.Message);
+            }
+
+            System.Console.WriteLine(result.Message);
+            return new OkObjectResult(result.Object);
+        }
+
+        [HttpGet]
+        [Route("get-trending-posts")]
+        public IActionResult GetTrendingPosts()
+        {
+            var result = service.GetTrending();
+
+            if(!result.Succedeed)
+            {
+                System.Console.WriteLine(result.Message);
+                return BadRequest(result.Message);
+            }
+
+            System.Console.WriteLine(result.Message);
+            return new OkObjectResult(result.Object);
+        }
+
+        [HttpPost]
+        [Route("delete-post")]
+        public async Task<IActionResult> DeletePost(PostDTO postDTO)
+        {
+            var result = await service.DeletePost(postDTO.Id);
+
+            if(!result.Succedeed)
+            {
                 System.Console.WriteLine(result.Message);
                 return BadRequest(result.Message);
             }

@@ -1,53 +1,50 @@
-import React from 'react'
-import {Route, Switch, Redirect} from 'react-router-dom'
-import {LoginPage} from './pages/LoginPage.jsx'
-import {RegisterPage} from './pages/RegisterPage.jsx'
-import {MainPage} from './pages/MainPage.jsx'
-import {ProfilePage} from './pages/ProfilePage'
-import {EditProfilePage} from './pages/EditProfilePage'
-import {TrendingPage} from './pages/TrendingPage'
-import {CommentPage} from './pages/CommentPage'
+import React from "react"
+import { Route, Switch, Redirect } from "react-router-dom"
+import { LoginPage } from "./pages/LoginPage.jsx"
+import { RegisterPage } from "./pages/RegisterPage.jsx"
+import { MainPage } from "./pages/MainPage.jsx"
+import { ProfilePage } from "./pages/ProfilePage"
+import { EditProfilePage } from "./pages/EditProfilePage"
+import { TrendingPage } from "./pages/TrendingPage"
+import { CommentPage } from "./pages/CommentPage"
 
 export const useRoute = (isAuthenticated) => {
-    if(isAuthenticated)
-    {
-        return(
+    if (isAuthenticated) {
+        return (
             <Switch>
+                <Route path="/comment/:id">
+                    <CommentPage />
+                </Route>
+                <Route path="/profile/:id">
+                    <ProfilePage />
+                </Route>
                 <Route path="/home">
-                    <MainPage/>
+                    <MainPage />
                 </Route>
                 <Route path="/profile" exact>
-                    <ProfilePage/>
+                    <ProfilePage />
                 </Route>
-                <Route path="/profile/edit" exact>
-                    <EditProfilePage/>
+                <Route path="/edit-profile" exact>
+                    <EditProfilePage />
                 </Route>
                 <Route path="/trending" exact>
-                    <TrendingPage/>
+                    <TrendingPage />
                 </Route>
-                <Route path="comment/:id">
-                    <CommentPage/>
-                </Route>
-                <Route path="profile/:id">
-                    <ProfilePage/>
-                </Route>
-                <Redirect to="/home"/>
+
+                <Redirect to="/home" />
             </Switch>
         )
-    }
-    else
-    {
-        return(
+    } else {
+        return (
             <Switch>
                 <Route path="/register">
-                    <RegisterPage/>
+                    <RegisterPage />
                 </Route>
                 <Route path="/login">
-                    <LoginPage/>
+                    <LoginPage />
                 </Route>
-                <Redirect to="/login"/>
+                <Redirect to="/login" />
             </Switch>
         )
     }
-
 }

@@ -4,6 +4,7 @@ using SocialApp.DA.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SocialApp.DA.Interfaces
 {
@@ -13,7 +14,7 @@ namespace SocialApp.DA.Interfaces
 
         IStore<ApplicationUser> UserStore { get; }
 
-        IDetachRepository<UserProfile> UserProfiles { get; }
+        IRepository<UserProfile> UserProfiles { get; }
 
         IRepository<Comment> Comments { get; }
 
@@ -21,6 +22,6 @@ namespace SocialApp.DA.Interfaces
 
         IRepository<Like> Likes {get;}
 
-        void Commit();
+        Task Commit();
     }
 }

@@ -53,11 +53,11 @@ namespace SocialApp
                     };
                 });
 
-            IServiceCreator serviceCreator = new ServiceCreator(Configuration.GetConnectionString("DefaultConnection"));
-            services.AddSingleton<ICommentService>(serviceCreator.CreateCommentService());
-            services.AddSingleton<IPostService>(serviceCreator.CreatePostService());
-            services.AddSingleton<IUserProfileService>(serviceCreator.CreateUserProfileService());
-            services.AddSingleton<IApplicationUserService>(serviceCreator.CreateApplicationUserService());
+            ServiceCreator serviceCreator = new ServiceCreator(Configuration.GetConnectionString("DefaultConnection"));
+            services.AddScoped<ICommentService, CommentService>(conf => serviceCreator.CreateCommentService());
+            services.AddScoped<IPostService, PostService>(conf => serviceCreator.CreatePostService());
+            services.AddScoped<IUserProfileService, UserProfileService>(conf => serviceCreator.CreateUserProfileService());
+            services.AddScoped<IApplicationUserService, ApplicationUserService>(conf => serviceCreator.CreateApplicationUserService());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Linq;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using SocialApp.BL.BusinessModels;
@@ -15,9 +16,19 @@ namespace SocialApp.BL.Services
     {
         IUnitOfWork database { get; set; }
 
+        IMapper mapper;
+
         public UserProfileService(IUnitOfWork uow)
         {
             database = uow;
+
+            mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserProfile, UserDTO>()
+            .ForMember(dto => dto.Photo, conf => conf.MapFrom(src => "data:image/jpeg;base64," + Convert.ToBase64String(src.Photo)))
+            .ForMember(dto => dto.SubscriptionsUserIds, conf => conf.MapFrom(src => src.Subscriptions.Select(profile => profile.Id)))
+            .ForMember(dto => dto.SubscribersUserIds, conf => conf.MapFrom(src => src.Subscribers.Select(profile => profile.Id)))
+            .ForMember(dto => dto.PostsIds, conf => conf.MapFrom(src => src.Posts.Select(post => post.Id)))
+            ).CreateMapper();
+
         }
 
         public async Task<OperationDetails> GetUser(string Id)
@@ -29,19 +40,8 @@ namespace SocialApp.BL.Services
                 if (user == null)
                     return new OperationDetails(false, "User doesn't exists");
 
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserProfile, UserDTO>()).CreateMapper();
                 var obj = mapper.Map<UserProfile, UserDTO>(user);
-
-                return new OperationDetails(true, "Success", null, 
-                new {
-                    UserName = user.Name, 
-                    Photo = "data:image/jpeg;base64," + Convert.ToBase64String(user.Photo), 
-                    Bio = user.Bio,
-                    Email = user.ApplicationUser.Email,
-                    Posts = user.Posts.Count,
-                    Followers = user.Subscriptions.Count,
-                    Following = user.Subscribers.Count
-                    });
+                return new OperationDetails(true, "Success", null, obj);
             }
             catch (Exception e)
             {
@@ -87,9 +87,9 @@ namespace SocialApp.BL.Services
                     user.Subscriptions.Remove(whomUser);
                     whomUser.Subscribers.Remove(user);
 
-                    database.UserProfiles.Update(whomUser);
-                    database.UserProfiles.Update(user);
-                    database.Commit();
+                    database.UserProfiles.Update(whomUser, whomId);
+                    database.UserProfiles.Update(user, Id);
+                    await database.Commit();
 
                     return new OperationDetails(true, "Successfully unsubscribed");
                 }
@@ -97,9 +97,9 @@ namespace SocialApp.BL.Services
                 user.Subscriptions.Add(whomUser);
                 whomUser.Subscribers.Add(user);
 
-                database.UserProfiles.Update(whomUser);
-                database.UserProfiles.Update(user);
-                database.Commit();
+                database.UserProfiles.Update(whomUser, whomId);
+                database.UserProfiles.Update(user, Id);
+                await database.Commit();
 
                 return new OperationDetails(true, "Successfully subscribed");
             }
@@ -109,7 +109,7 @@ namespace SocialApp.BL.Services
             }
         }
 
-        public OperationDetails UpdateProfile(UserDTO userDTO)
+        public async Task <OperationDetails> UpdateProfile(UserDTO userDTO)
         {
             try
             {
@@ -126,9 +126,9 @@ namespace SocialApp.BL.Services
                 if(userProfile == null || applicationUser == null)
                     return new OperationDetails(false, "Failed transforming object");
 
-                database.UserProfiles.DetachLocal(userProfile, userProfile.Id);
-                database.UserStore.DetachLocal(applicationUser, applicationUser.Id);
-                database.Commit();
+                database.UserProfiles.Update(userProfile, userProfile.Id);
+                database.UserStore.Update(applicationUser, applicationUser.Id);
+                await database.Commit();
 
                 return new OperationDetails(true, "Success");
             }

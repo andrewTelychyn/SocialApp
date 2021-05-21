@@ -33,14 +33,9 @@ namespace SocialApp.DA.Repositories
             return context.Roles.Find(name);
         }
 
-        public void Update(ApplicationRole item)
+        public void Update(ApplicationRole item, string Id)
         {
             context.Roles.Update(item);
-        }
-
-        public void DetachLocal(ApplicationRole Item, string Id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

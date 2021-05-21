@@ -19,5 +19,8 @@ namespace SocialApp.BL.Interfaces
 
         Task<OperationDetails> LikePost(string userId, string postId);
 
+        Task<OperationDetails> GetOnePost(string Id);
+
+        OperationDetails GetTrending();
     }
 }

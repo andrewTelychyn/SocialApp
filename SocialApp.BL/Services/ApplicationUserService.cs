@@ -83,7 +83,7 @@ namespace SocialApp.BL.Services
                 await database.UserStore.CreateAsync(user);
 
                 await database.UserProfiles.CreateAsync(profile);
-                database.Commit();
+                await database.Commit();
                 hasher.Dispose();
 
                 var token = TokenCreator.Create();

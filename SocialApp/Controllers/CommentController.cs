@@ -28,29 +28,52 @@ namespace SocialApp.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<CommentController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<CommentController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("add-comment")]
+        public async Task<IActionResult> Create(CommentDTO commentDTO)
         {
+            System.Console.WriteLine("trying to create comment");
+            var result = await service.CreateComment(commentDTO);
+
+            if(!result.Succedeed)
+            {
+                System.Console.WriteLine(result.Message);
+                return BadRequest(result.Message);
+            }
+            System.Console.WriteLine("comment creating success");
+            return new OkObjectResult(result.Object);
         }
 
-        // PUT api/<CommentController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost]
+        [Route("get-comments")]
+        public async Task<IActionResult> GetComments(PostDTO postDTO)
         {
+            var result = await service.ShowComments(postDTO.Id);
+
+            if(!result.Succedeed)
+            {
+                System.Console.WriteLine(result.Message);
+                return BadRequest(result.Message);
+            }
+
+            System.Console.WriteLine("getting comments success");
+            return new OkObjectResult(result.Object);
         }
 
-        // DELETE api/<CommentController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPost]
+        [Route("smash-that-like-button")]
+        public async Task<IActionResult> SmashLike(CommentDTO commentDTO)
         {
+            var result = await service.LikeComment(commentDTO.UserId, commentDTO.Id);
+
+            if(!result.Succedeed)
+            {
+                System.Console.WriteLine(result.Message);
+                return BadRequest(result.Message);
+            }
+
+            System.Console.WriteLine(result.Message);
+            return new OkObjectResult(new {Message = result.Message});
         }
     }
 }

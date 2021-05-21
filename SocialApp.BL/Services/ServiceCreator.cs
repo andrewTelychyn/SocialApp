@@ -10,34 +10,34 @@ using SocialApp.DA.EF;
 
 namespace SocialApp.BL.Services
 {
-    public class ServiceCreator : IServiceCreator
+    public class ServiceCreator //: IServiceCreator
     {
-        private readonly IUnitOfWork unitofwork;
+        private readonly string connectingString;
 
         public ServiceCreator(string connectingString)
         {
-            unitofwork = new UnitOfWork(new ApplicationDbContext(connectingString));
+            this.connectingString = connectingString;
         }
 
 
-        public IApplicationUserService CreateApplicationUserService()
+        public ApplicationUserService CreateApplicationUserService()
         {
-            return new ApplicationUserService(unitofwork);
+            return new ApplicationUserService(new UnitOfWork(new ApplicationDbContext(connectingString)));
         }
 
-        public ICommentService CreateCommentService()
+        public CommentService CreateCommentService()
         {
-            return new CommentService(unitofwork);
+            return new CommentService(new UnitOfWork(new ApplicationDbContext(connectingString)));
         }
 
-        public IPostService CreatePostService()
+        public PostService CreatePostService()
         {
-            return new PostService(unitofwork);
+            return new PostService(new UnitOfWork(new ApplicationDbContext(connectingString)));
         }
 
-        public IUserProfileService CreateUserProfileService()
+        public UserProfileService CreateUserProfileService()
         {
-            return new UserProfileService(unitofwork);
+            return new UserProfileService(new UnitOfWork(new ApplicationDbContext(connectingString)));
         }
 
     }

@@ -2,9 +2,11 @@
 using SocialApp.DA.Entities;
 using SocialApp.DA.Interfaces;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SocialApp.DA.Repositories
 {
@@ -35,15 +37,19 @@ namespace SocialApp.DA.Repositories
             return await context.Posts.FindAsync(id);
         }
 
-        public IEnumerable<Post> GetAll()
+        public IEnumerable<Post> GetAllAsync()
         {
             return context.Posts;
         }
 
-        public void Update(Post item)
+        public void Update(Post Item, string Id)
         {
-            context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
-            context.Posts.Update(item);
+            var local = context.UserProfiles.Local.FirstOrDefault(Item => Item.Id == Id);
+            if(local != null)
+            {
+                context.Entry(local).State = EntityState.Detached;
+            }
+            context.Entry(Item).State = EntityState.Modified;
         }
 
 

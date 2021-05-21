@@ -1,47 +1,44 @@
-import {useCallback, useContext, useEffect} from 'react'
-import {AuthContext} from '../context/AuthContext'
-import { useHttp } from '../hooks/http.hook'
+import { useCallback, useContext, useEffect, useState } from "react"
+import { AuthContext } from "../context/AuthContext"
+import { useHttp } from "../hooks/http.hook"
 
-export const useData = () => {
-    const {request} = useHttp()
-    let context = useContext(AuthContext)
-    
-    const getAllData =  async () => {
-    
+export const useData = (userId) => {
+    const { request } = useHttp()
+
+    let [data, setData] = useState({
+        bio: "",
+        email: "",
+        userName: "",
+        photo: "",
+        followers: 0,
+        following: 0,
+        posts: 0,
+    })
+
+    const getAllData = async () => {
         try {
-            console.log(context.userId)
-            const data = await request('api/user/getprofile', 'POST', {Id:context.userId})
-            console.log('getting data')
-            if(data) {
-                context.bio = data.bio
-                context.email = data.email
-                context.userName = data.userName
-                context.photo = data.photo
-                
-                context.posts = data.posts
-                context.followers = data.followers
-                context.following = data.following
+            const data = await request("api/user/getprofile", "POST", {
+                Id: userId,
+            })
+            if (data) {
+                setData({
+                    bio: data.bio,
+                    email: data.email,
+                    userName: data.name,
+                    photo: data.photo,
+
+                    posts: data.postsIds,
+                    followers: data.subscribersUserIds,
+                    following: data.subscriptionsUserIds,
+                })
+                console.log("data", data)
             }
         } catch (e) {}
     }
 
-    const getNumbers = useCallback( async () => {
-    
-        try {
-            const data = await request('api/user/getprofile', 'POST', {Id:context.userId})
-            if(data) {
-                context.posts = data.posts
-                context.followers = data.followers
-                context.following = data.following
-            }
-        } catch (e) {}
-    })
-
     useEffect(() => {
-        console.log('maybe')
         getAllData()
-    }, [getAllData])
+    }, [userId])
 
-    return {getAllData, getNumbers}
+    return { getAllData, data }
 }
-

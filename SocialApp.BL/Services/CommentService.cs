@@ -18,9 +18,15 @@ namespace SocialApp.BL.Services
     {
         IUnitOfWork database { get; set; }
 
+        private  IMapper mapper; 
+
         public CommentService(IUnitOfWork uow)
         {
             database = uow;
+
+            mapper = new MapperConfiguration(cfg => cfg.CreateMap<Comment, CommentDTO>()
+            .ForMember(comment => comment.UserId, dto => dto.MapFrom(src => src.UserProfileId)))
+            .CreateMapper();
         }
 
         public async Task<OperationDetails> CreateComment(CommentDTO item)
@@ -36,7 +42,6 @@ namespace SocialApp.BL.Services
                     UserProfileId = item.UserId,
                     PostId = item.PostId
                 };
-
                 var post = await database .Posts.GetItemAsync(item.PostId);
                 if (post == null)
                     return new OperationDetails(false, "Wrong post ID", "PostId");
@@ -51,11 +56,15 @@ namespace SocialApp.BL.Services
                 await database.Comments.CreateAsync(comment);
 
                 post.Comments.Add(comment);
-                database.Posts.Update(post);
 
-                database.Commit();
+                database.Posts.Update(post, item.PostId);
 
-                return new OperationDetails(true, "Successfully created");
+                await database.Commit();
+
+                item.UserName = user.Name;
+                item.Date = DateTime.Now;
+
+                return new OperationDetails(true, "Successfully created", null, item);
             }
             catch ( Exception e)
             {
@@ -80,11 +89,11 @@ namespace SocialApp.BL.Services
                     return new OperationDetails(false, "Wrong post ID", "PostId");
 
                 post.Comments.Remove(comment);
-                database.Posts.Update(post);
+                database.Posts.Update(post, post.Id);
 
                 database.Comments.Delete(comment);
 
-                database.Commit();
+                await database.Commit();
 
                 return new OperationDetails(true, "Successfully deleted");
             }
@@ -104,29 +113,34 @@ namespace SocialApp.BL.Services
                 if (comment == null || user == null)
                     return new OperationDetails(false, "Comment doesn't exists");
 
-
                 bool found = false;
                 Like obj = new Like {Id =  new IdGenerator().Generate(), UserProfileId = userId, UserProfile = user};
+                
+                if(comment.Likes == null)
+                    return new OperationDetails(false, "no likes");
+
                 foreach(var item in comment.Likes)
                 {
                     if(item.UserProfileId == userId)
                     {
                         found = true;
                         obj = item;
+                        break;
                     }
                 }
 
                 if (found)
                 {
                     comment.Likes.Remove(obj);
-                    database.Comments.Update(comment);
-                    database.Commit();
+                    database.Comments.Update(comment, comment.Id);
+                    await database.Commit();
+
                     return new OperationDetails(true, "Successfully removed like");
                 }
 
                 comment.Likes.Add(obj);
-                database.Comments.Update(comment);
-                database.Commit();
+                database.Comments.Update(comment, comment.Id);
+                await database.Commit();
 
                 return new OperationDetails(true, "Successfully added like");
             }
@@ -141,16 +155,21 @@ namespace SocialApp.BL.Services
             try
             {
                 var post = await database.Posts.GetItemAsync(postId);
-
                 if (post == null || post.Comments.Count == 0)
                     return new OperationDetails(false, "There is no comments");
 
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Comment, CommentDTO>()).CreateMapper();
                 var list = new List<CommentDTO>();
+                var comments = post.Comments.ToList();
 
                 list.AddRange(mapper.Map<ICollection<Comment>, List<CommentDTO>>(post.Comments));
 
-                return new OperationDetails(true, "Success", null, list);
+                for (int i = 0; i < list.Count; i++)
+                {
+                    list[i].UserName = database.UserProfiles.GetItemAsync(list[i].UserId).Result.Name;
+                    list[i].LikesUserIds = comments[i].Likes.Select(like => like.UserProfileId).ToList();
+                }
+
+                return new OperationDetails(true, "Success", null, list.OrderBy(d => d.Date).Reverse());
             }
             catch (Exception e)
             {
