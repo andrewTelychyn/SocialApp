@@ -1,5 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react"
-import { AuthContext } from "../context/AuthContext"
+import { useEffect, useState } from "react"
 import { useHttp } from "../hooks/http.hook"
 
 export const useData = (userId) => {
@@ -14,8 +13,13 @@ export const useData = (userId) => {
         following: 0,
         posts: 0,
     })
+    let [changed, setChanged] = useState(false)
+
+    let storageName = "UserProfileData"
 
     const getAllData = async () => {
+        if (!userId) return
+
         try {
             const data = await request("api/user/getprofile", "POST", {
                 Id: userId,
@@ -31,7 +35,11 @@ export const useData = (userId) => {
                     followers: data.subscribersUserIds,
                     following: data.subscriptionsUserIds,
                 })
+
                 console.log("data", data)
+
+                localStorage.setItem(storageName, JSON.stringify({ ...data }))
+                console.log("wrote into storage")
             }
         } catch (e) {}
     }
@@ -39,6 +47,25 @@ export const useData = (userId) => {
     useEffect(() => {
         getAllData()
     }, [userId])
+
+    useEffect(() => {
+        if (changed) {
+            getAllData()
+        } else {
+            const data = JSON.parse(localStorage.getItem(storageName))
+
+            setData({
+                bio: data.bio,
+                email: data.email,
+                userName: data.name,
+                photo: data.photo,
+
+                posts: data.postsIds,
+                followers: data.subscribersUserIds,
+                following: data.subscriptionsUserIds,
+            })
+        }
+    }, [changed])
 
     return { getAllData, data }
 }

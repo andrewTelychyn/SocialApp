@@ -84,6 +84,7 @@ namespace SocialApp.BL.Services
 
                 if (user.Subscriptions.Contains(whomUser))
                 {
+
                     user.Subscriptions.Remove(whomUser);
                     whomUser.Subscribers.Remove(user);
 
@@ -98,7 +99,11 @@ namespace SocialApp.BL.Services
                 whomUser.Subscribers.Add(user);
 
                 database.UserProfiles.Update(whomUser, whomId);
+
+                await database.Commit();
+
                 database.UserProfiles.Update(user, Id);
+
                 await database.Commit();
 
                 return new OperationDetails(true, "Successfully subscribed");

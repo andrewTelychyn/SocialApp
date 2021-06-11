@@ -4,44 +4,51 @@ import { Post } from "../components/Post"
 import { AuthContext } from "../context/AuthContext"
 import { useHttp } from "../hooks/http.hook"
 
-const path = require("path")
-
 export const MainPage = () => {
-    //src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
-
-    let { request } = useHttp()
+    let { request, loading } = useHttp()
     let context = useContext(AuthContext)
 
-    const [loaded, setLoaded] = useState(false)
     const [postForm, setPostForm] = useState({
         Content: "",
         UserId: context.userId,
     })
     const [posts, setPosts] = useState([])
+    const [classes, setClasses] = useState(["slide-menu", "hide"])
 
     const onPostChange = (event) => {
         setPostForm({ ...postForm, [event.target.name]: event.target.value })
     }
 
     const confirmPost = async () => {
-        if (postForm.Content === "") return
+        if (postForm.Content.trim() == "") return
 
         try {
             const data = await request("/api/post/create", "POST", {
                 ...postForm,
             })
-            context.posts.push(data.id)
+
             setPosts([data, ...posts])
             setPostForm({ ...postForm, Content: "" })
+            context.posts.push(data.id)
         } catch (e) {}
     }
 
-    const deletePost = (id) => {
-        const index1 = context.posts.indexOf(id)
-        if (index1 > -1) {
-            context.posts.splice(index1, 1)
-        }
+    const loadPosts = useCallback(async () => {
+        try {
+            const data = await request("/api/post/get-uploads-posts", "POST", {
+                Id: context.userId,
+                SubscriptionsUserIds: context.following,
+            })
+            if (data) {
+                setPosts(data)
+                //console.log(data)
+            }
 
+            //setTimeout((c) => console.log("hey"), 20000)
+        } catch (e) {}
+    }, [context.userId, context.following])
+
+    const deletePost = (id) => {
         let index2
         posts.filter((post, index) => {
             if (post.id == id) {
@@ -56,20 +63,16 @@ export const MainPage = () => {
                     .concat(posts.slice(index2 + 1, posts.length))
             )
         }
+
+        const index1 = context.posts.indexOf(id)
+        if (index1 > -1) {
+            context.posts.splice(index1, 1)
+        }
     }
 
-    const loadPosts = useCallback(async () => {
-        try {
-            const data = await request("/api/post/get-uploads-posts", "POST", {
-                Id: context.userId,
-                SubscriptionsUserIds: context.following,
-            })
-            if (data) {
-                setPosts(data)
-                //console.log(data)
-            }
-        } catch (e) {}
-    }, [context.userId, context.following])
+    const slideMenu = (classValue) => {
+        setClasses([classes[0], classValue])
+    }
 
     useEffect(() => {
         loadPosts()
@@ -140,7 +143,29 @@ export const MainPage = () => {
                     </div>
                 </div>
                 <div className="main-part">
-                    <h2>Uploads</h2>
+                    <div className={classes.join(" ")}>
+                        <div className="slide-menu-links">
+                            <NavLink to="/home" className="link-menu-active">
+                                Uploads
+                            </NavLink>
+                            <NavLink to="/profile">Profile</NavLink>
+                            <NavLink to="/trending">Trending</NavLink>
+                        </div>
+
+                        <i
+                            class="fas fa-times"
+                            onClick={() => slideMenu("hide")}
+                        ></i>
+                    </div>
+                    <div className="main-head">
+                        <h2>Uploads</h2>
+                        <div className="side-menu">
+                            <i
+                                class="fas fa-bars"
+                                onClick={() => slideMenu("show")}
+                            ></i>
+                        </div>
+                    </div>
                     <div className="input-post">
                         <span>@{context.userName}</span>
                         <input
@@ -148,11 +173,19 @@ export const MainPage = () => {
                             value={postForm.Content}
                             Name="Content"
                             onChange={onPostChange}
+                            autoComplete="off"
                         />
                         <p onClick={confirmPost}>SUBMIT</p>
                     </div>
                     <div className="posts">
                         <h3>Recent posts</h3>
+                        {loading && posts.length === 0 && (
+                            <div className="post-loading-container">
+                                <div className="loading">
+                                    <div className="post-loading"></div>
+                                </div>
+                            </div>
+                        )}
                         {posts.map((item, index) => {
                             return (
                                 <Post

@@ -23,7 +23,6 @@ namespace SocialApp.BL.Services
 
             mapper = new MapperConfiguration(cfg => cfg.CreateMap<Post, PostDTO>().
                     ForMember(dto => dto.UserId, conf => conf.MapFrom(src => src.UserProfileId)))
-                    //ForMember(post => post.LikesUserIds, dto => dto.MapFrom(src => src.Likes.Select(item => item.UserProfileId)))).
                     .CreateMapper();
         }
 
@@ -226,8 +225,9 @@ namespace SocialApp.BL.Services
         {
             try
             {
-                var posts = database.Posts.GetAllAsync().ToList();
+                int dayAgo = -20;
 
+                var posts = database.Posts.GetAllAsync().ToList();
                 if(posts == null || posts.Count() == 0)
                     return new OperationDetails(false, "There is no posts");
 
@@ -241,7 +241,7 @@ namespace SocialApp.BL.Services
                     list[i].CommentsIds = posts[i].Comments.Select(comment => comment.UserProfileId).ToList();
                 }
 
-                var now = DateTime.Now.AddDays(-7);
+                var now = DateTime.Now.AddDays(dayAgo);
                 list = list.Where(p => p.Date.CompareTo(now) > 0).ToList();
 
                 return new OperationDetails(true, "Success", null, list.OrderBy(p => p.LikesUserIds.Count).ThenBy(p => p.CommentsIds.Count).Reverse());

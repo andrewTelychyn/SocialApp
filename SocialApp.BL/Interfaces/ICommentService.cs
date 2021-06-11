@@ -14,7 +14,7 @@ namespace SocialApp.BL.Interfaces
 
         Task<OperationDetails> LikeComment(string userId, string commentId);
 
-        Task<OperationDetails> DeleteComment(string commentId, string userId);
+        Task<OperationDetails> DeleteComment(string commentId);
 
         Task<OperationDetails> ShowComments(string postId);
     }

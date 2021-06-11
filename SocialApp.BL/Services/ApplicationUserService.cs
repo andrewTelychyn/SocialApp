@@ -37,7 +37,23 @@ namespace SocialApp.BL.Services
                 if (!correct)
                     return new OperationDetails(false, "Wrong password");
 
-                var token = TokenCreator.Create();
+                System.Console.WriteLine(user.Email);
+                System.Console.WriteLine(user.Role);
+
+                if(user.Role == "" || user.Role == null)
+                {
+                    user.Role = "User";
+                    database.UserStore.Update(user, user.Id);
+                    database.Commit().GetAwaiter();
+                }
+
+                var claims = new List<Claim> 
+                {
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role),
+                };
+
+                var token = TokenCreator.Create(claims);
 
                 Console.WriteLine($"Login user: {item.Name}");
 
@@ -63,10 +79,16 @@ namespace SocialApp.BL.Services
                 if (user != null)
                     return new OperationDetails(false, "Already exists", "Email");
 
-                user = new ApplicationUser { Email = item.Email, UserName = item.Email, Id = new IdGenerator().Generate() };
-
                 var hasher = new PasswordHasher();
-                user.PasswordHash = hasher.GetHash(item.Password);
+                user = new ApplicationUser { 
+                    Email = item.Email, 
+                    UserName = item.Email, 
+                    Id = new IdGenerator().Generate(), 
+                    Role = "User", 
+                    NormalizedEmail = item.Email.ToUpper(), 
+                    PasswordHash = hasher.GetHash(item.Password) };
+
+
 
                 UserProfile profile = new UserProfile
                 {
@@ -77,16 +99,25 @@ namespace SocialApp.BL.Services
                     ApplicationUser = user
                 };
 
-                user.UserProfile = profile;
 
-                user = AddToRoleAsync(user, "User");
+                user.UserProfile = profile;
                 await database.UserStore.CreateAsync(user);
 
                 await database.UserProfiles.CreateAsync(profile);
                 await database.Commit();
                 hasher.Dispose();
 
-                var token = TokenCreator.Create();
+                ApplicationUser user2 =  database.UserStore.FindByName(item.Email);
+                if (user2 == null)
+                    System.Console.WriteLine("Failed");
+
+                var claims = new List<Claim> 
+                {
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role),
+                };
+
+                var token = TokenCreator.Create(claims);
 
                 Console.WriteLine($"Created new user: {item.Name}");
 
@@ -96,16 +127,6 @@ namespace SocialApp.BL.Services
             {
                 return new OperationDetails(false, e.Message);
             }
-        }
-
-        public ApplicationUser AddToRoleAsync(ApplicationUser user, string roleName)
-        {
-            var role =  database.RoleStore.FindByName(roleName);
-
-            if (role != null)
-                user.Role = role.Name;
-
-            return user;
         }
     }
 }

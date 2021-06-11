@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using SocialApp.BL.Interfaces;
 using SocialApp.BL.BusinessModels;
 using SocialApp.BL.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -41,6 +42,7 @@ namespace SocialApp.Controllers
         }
 
         // POST api/user/update
+        [Authorize]
         [HttpPost]
         [Route("update")]
         public async Task<IActionResult> Update(UserDTO userDTO)
@@ -57,9 +59,10 @@ namespace SocialApp.Controllers
             return new OkObjectResult(new {Message = "Updating user success"});
         }
 
+        [Authorize]
         [HttpPost]
         [Route("subscribe")]
-        public async Task<IActionResult> Subsrcive(PostDTO postDTO)
+        public async Task<IActionResult> Subscribe(PostDTO postDTO)
         {
             var result = await service.Subscribe(postDTO.Id, postDTO.UserId);
 

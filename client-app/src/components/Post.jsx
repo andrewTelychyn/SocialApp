@@ -116,14 +116,14 @@ export const Post = ({
 
     const deletePost = async () => {
         try {
-            const data = await request("/api/post/delete-post", "POST", {
-                Id: id,
-            })
             onRemove(id)
 
             if (path == `/comment/${id}`) {
                 history.push("/home")
             }
+            const data = await request("/api/post/delete-post", "POST", {
+                Id: id,
+            })
         } catch (e) {}
     }
 
@@ -149,7 +149,12 @@ export const Post = ({
                 color: green,
                 childClassName: "far fa-heart",
             })
+
             setMyLike(false)
+
+            const index = likes.indexOf(context.userId)
+            if (index > 0) likes.splice(index, 1)
+
             try {
                 await request("/api/post/smash-that-like-button", "POST", {
                     Id: id,
@@ -162,7 +167,10 @@ export const Post = ({
                 color: red,
                 childClassName: "fas fa-heart",
             })
+
             setMyLike(true)
+            likes.push(context.userId)
+
             try {
                 await request("/api/post/smash-that-like-button", "POST", {
                     Id: id,

@@ -7,7 +7,7 @@ import { useHttp } from "../hooks/http.hook"
 
 export const CommentPage = () => {
     const context = useContext(AuthContext)
-    const { request } = useHttp()
+    const { request, loading } = useHttp()
     let { id } = useParams()
 
     const [post, setPost] = useState({})
@@ -25,6 +25,38 @@ export const CommentPage = () => {
             [event.target.name]: event.target.value,
         })
     }
+    const [classes, setClasses] = useState(["slide-menu", "hide"])
+
+    const slideMenu = (classValue) => {
+        setClasses([classes[0], classValue])
+    }
+
+    const deleteComment = (id) => {
+        let index1
+        comments.filter((comment, index) => {
+            if (comment.id == id) {
+                index1 = index
+                return
+            }
+        })
+        if (index1 > -1) {
+            setComments(
+                comments
+                    .slice(0, index1)
+                    .concat(comments.slice(index1 + 1, comments.length))
+            )
+        }
+        let index = post.commentsIds.indexOf(id)
+        if (index > -1)
+            setPost({ ...post, commentsIds: post.commentsIds.splice(index, 1) })
+    }
+
+    const deletePost = async (theid) => {
+        const index1 = context.posts.indexOf(theid)
+        if (index1 > -1) {
+            context.posts.splice(index1, 1)
+        }
+    }
 
     const confirmComment = async () => {
         if (commentForm.Content.trim() === "") return
@@ -33,9 +65,10 @@ export const CommentPage = () => {
             const data = await request("/api/comment/add-comment", "POST", {
                 ...commentForm,
             })
-            setComments([data, ...comments])
+
+            setComments([...comments, data])
             setCommentForm({ ...commentForm, Content: "" })
-            setPost({ ...post, commentsIds: [post.commentsIds, data.id] })
+            setPost({ ...post, commentsIds: [...post.commentsIds, data.id] })
         } catch (e) {}
     }
 
@@ -131,7 +164,27 @@ export const CommentPage = () => {
                     </div>
                 </div>
                 <div className="main-part">
-                    <h2>Comments</h2>
+                    <div className={classes.join(" ")}>
+                        <div className="slide-menu-links">
+                            <NavLink to="/home">Uploads</NavLink>
+                            <NavLink to="/profile">Profile</NavLink>
+                            <NavLink to="/trending">Trending</NavLink>
+                        </div>
+
+                        <i
+                            class="fas fa-times"
+                            onClick={() => slideMenu("hide")}
+                        ></i>
+                    </div>
+                    <div className="main-head">
+                        <h2>Profile Page</h2>
+                        <div className="side-menu">
+                            <i
+                                class="fas fa-bars"
+                                onClick={() => slideMenu("show")}
+                            ></i>
+                        </div>
+                    </div>
                     <Post
                         content={post.content}
                         id={post.id}
@@ -140,6 +193,7 @@ export const CommentPage = () => {
                         comments={post.commentsIds}
                         stringDate={post.date}
                         userName={post.userName}
+                        onRemove={deletePost}
                     />
                     <div className="comments">
                         {comments.map((item, index) => {
@@ -152,15 +206,24 @@ export const CommentPage = () => {
                                     stringDate={item.date}
                                     userName={item.userName}
                                     key={index}
+                                    onRemove={deleteComment}
                                 />
                             )
                         })}
+                        {loading && (
+                            <div class="comment-loading-container">
+                                <div className="loading">
+                                    <div className="comment-loading"></div>
+                                </div>
+                            </div>
+                        )}
                         <div className="comment-input">
                             <input
                                 type="text"
                                 value={commentForm.Content}
                                 Name="Content"
                                 onChange={onCommentChange}
+                                autoComplete="off"
                             />
                             <p onClick={confirmComment}>SUBMIT</p>
                         </div>

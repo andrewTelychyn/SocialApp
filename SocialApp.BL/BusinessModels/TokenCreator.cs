@@ -9,7 +9,7 @@ namespace SocialApp.BL.BusinessModels
 {
     public class TokenCreator
     {
-        public static string Create() //IEnumerable<Claim> claims
+        public static string Create(IEnumerable<Claim> claims) //IEnumerable<Claim> claims
         {
             var now = DateTime.UtcNow;
 
@@ -17,8 +17,8 @@ namespace SocialApp.BL.BusinessModels
                 (issuer: JwtOptions.ISSUER,
                 audience: JwtOptions.AUDIENCE,
                 notBefore: now,
-                //claims: claims,
-                expires: now.Add(TimeSpan.FromMinutes(JwtOptions.LIFETIME)),
+                claims: claims,
+                expires: now.Add(TimeSpan.FromHours(JwtOptions.LIFETIME)),
                 signingCredentials: new SigningCredentials(
                     JwtOptions.GetSymmetricSecurityKey(),
                     SecurityAlgorithms.HmacSha256));

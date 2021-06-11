@@ -51,7 +51,7 @@ input:focus {
 .container {
     display: flex;
     min-height: 100vh;
-    //min-width: 100vw;
+    min-width: 100vw;
     justify-content: center;
     align-items: center;
     background-image: url("./media/bg-1.jpg");
@@ -89,7 +89,7 @@ input:focus {
     background-color: $green-color;
     color: $white-color;
     height: 100%;
-    width: 33%;
+    width: 40%;
 
     @extend .flex-center;
     flex-direction: column;
@@ -153,12 +153,26 @@ input:focus {
     input[type="submit"] {
         background-color: $green-color;
         border-radius: 40px;
-        padding: 10px 40px;
-        font-size: 16px;
+        //padding: 10px 40px;
+        //font-size: 16px;
         font-weight: 700;
         cursor: pointer;
         color: $white-color;
         margin-top: 15px;
+    }
+
+    .input-buttons {
+        a {
+            background-color: $green-color;
+            border-radius: 40px;
+            //padding: 10px 40px;
+            //font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            color: $white-color;
+            margin-top: 15px;
+            //display: none;
+        }
     }
 }
 
@@ -241,7 +255,8 @@ input:focus {
 
         width: 78%;
         position: sticky;
-        top: 384.5px;
+        //top: 384.5px;
+        top: 445px;
 
         .icons {
             margin: 0 12px;
@@ -295,9 +310,19 @@ input:focus {
     color: $green-color;
     padding: 15px 30px;
     min-height: 550px;
+    position: relative;
+    overflow: hidden;
 
-    h2 {
-        margin: 10px 0 20px;
+    .main-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 10px 20px 0;
+
+        .side-menu {
+            font-size: 25px;
+            cursor: pointer;
+        }
     }
 
     .posts {
@@ -384,7 +409,7 @@ input:focus {
 
 #li-date {
     cursor: default;
-    width: 80px;
+    width: 90px;
     font-weight: 100;
 }
 
@@ -547,7 +572,8 @@ input:focus {
         input[type="email"],
         input[type="text"],
         textarea {
-            background-color: $grey-color;
+            background-color: $white-color;
+            font-family: $raleway;
             padding: 10px 15px;
             width: 200px;
             border-radius: 5px;
@@ -595,23 +621,38 @@ input:focus {
         display: flex;
         flex-direction: row;
         align-items: center;
+        justify-content: space-between;
 
-        span {
-            display: block;
+        .comment-header-block {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            span {
+                display: block;
+                font-weight: 700;
+                font-size: 13px;
+                margin: 5px 0 8px 0;
+            }
+
+            i {
+                font-size: 4px;
+                margin: 0 8px;
+            }
+
+            p {
+                font-family: "Open Sans Condensed", sans-serif;
+                font-weight: 300;
+                padding-bottom: 3px;
+            }
+        }
+
+        .comment-delete-button {
+            font-family: $raleway;
             font-weight: 700;
             font-size: 13px;
-            margin: 5px 0 8px 0;
-        }
-
-        i {
-            font-size: 4px;
-            margin: 0 8px;
-        }
-
-        p {
-            font-family: "Open Sans Condensed", sans-serif;
-            font-weight: 300;
-            padding-bottom: 3px;
+            color: #e0245e;
+            padding: 0 3px;
+            cursor: pointer;
         }
     }
 
@@ -704,5 +745,318 @@ input:focus {
         text-align: center;
         font-family: $raleway;
         font-size: 13px;
+    }
+}
+
+.post-loading-container {
+    padding: 6px 10px;
+    width: 100%;
+    height: 100px;
+    background: $grey-color;
+    margin-bottom: 20px;
+}
+
+.loading {
+    position: relative;
+
+    animation: 0.5s linear 0s infinite forwards move_eye;
+    width: 100px;
+    height: 100px;
+}
+
+.post-loading {
+    //background: #fff;
+    //background: $grey-color;
+
+    background-image: linear-gradient(
+        to right,
+        rgba(221, 221, 221, 1) 0%,
+        rgba(245, 245, 245, 1) 20%,
+        rgba(245, 245, 245, 1) 40%,
+        rgba(221, 221, 221, 1) 100%
+    );
+
+    position: absolute;
+    height: 100%;
+    width: 100px;
+    top: -5px;
+}
+
+@keyframes move_eye {
+    from {
+        margin-left: 0%;
+    }
+    to {
+        margin-left: 75%;
+    }
+}
+
+.comment-loading-container {
+    height: 75px;
+    background: $grey-color;
+    width: 60%;
+    padding: 8px 10px;
+    margin: 8px 0;
+}
+
+.comment-loading {
+    background-image: linear-gradient(
+        to right,
+        rgba(221, 221, 221, 1) 0%,
+        rgba(245, 245, 245, 1) 20%,
+        rgba(245, 245, 245, 1) 40%,
+        rgba(221, 221, 221, 1) 100%
+    );
+
+    position: absolute;
+    height: 75px;
+    width: 80px;
+    top: -7px;
+}
+
+.slide-menu {
+    //animation: 0.5s slidein 1 ease-out;
+
+    //opacity: 0;
+    transition: all 0.75s ease;
+    //top: -70px;
+
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: $green-color;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .slide-menu-links {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 66%;
+        height: 100%;
+        margin-left: 20px;
+
+        a {
+            color: $white-color;
+            font-size: 21px;
+            padding: 15px 7px;
+            font-family: $raleway;
+        }
+    }
+
+    i {
+        color: $white-color;
+        font-size: 31px;
+        margin: 7px 40px 0 0;
+        cursor: pointer;
+    }
+}
+
+.show {
+    opacity: 1;
+    top: 0;
+}
+
+.hide {
+    opacity: 0;
+    top: -70px;
+}
+
+.link-menu-active {
+    border-bottom: 3px solid $white-color;
+}
+
+@keyframes slidein {
+    from {
+        top: -70px;
+    }
+
+    to {
+        top: 0px;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .container {
+        width: 100vw;
+        height: 100vh;
+    }
+    .main-part {
+        min-width: 450px;
+        width: 73%;
+
+        .side-menu {
+            i {
+                display: none;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1095px) and (max-width: 1165px) {
+    .ul-profile li {
+        font-size: 12px;
+        span {
+            font-size: 15px;
+        }
+    }
+
+    .comment-input p {
+        font-size: 10px;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1095px) {
+    .ul-profile {
+        li {
+            width: 80%;
+
+            font-size: 12px;
+            span {
+                font-size: 15px;
+            }
+        }
+
+        hr {
+            width: 84%;
+        }
+    }
+
+    .comment-input p {
+        font-size: 10px;
+    }
+
+    .hello-part {
+        h2 {
+            font-size: 20px;
+        }
+
+        a {
+            font-size: 12px;
+        }
+
+        p {
+            font-size: 12px;
+        }
+    }
+
+    .input-part {
+        h2 {
+            font-size: 23px;
+        }
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 800px) {
+    .container {
+        min-width: 500px;
+        min-height: 675px;
+    }
+    .side-bar {
+        display: none;
+    }
+    .main-part {
+        min-width: 320px;
+        width: 100%;
+        .side-menu {
+            i {
+                display: block;
+            }
+        }
+    }
+
+    .ul-profile {
+        li {
+            width: 80%;
+
+            font-size: 12px;
+            span {
+                font-size: 15px;
+            }
+        }
+
+        hr {
+            width: 84%;
+        }
+    }
+
+    .comment-input p {
+        font-size: 10px;
+    }
+
+    .input-part {
+        h2 {
+            font-size: 23px;
+        }
+    }
+}
+
+@media screen and (min-width: 360px) and (max-width: 400px) {
+    .container {
+        min-height: 800px;
+    }
+
+    .wrapper {
+        width: 95%;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 360px) {
+    .container {
+        min-height: 900px;
+    }
+
+    .wrapper {
+        width: 95vw;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 550px) {
+    .wrapper {
+        width: 85%;
+    }
+
+    .container {
+        height: 750px;
+    }
+}
+
+@media screen and (min-width: 0px) and (max-width: 800px) {
+    .hello-part {
+        display: none;
+    }
+
+    .input-part {
+        width: 100%;
+    }
+
+    .input-buttons {
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 10px;
+            margin-left: 20px;
+        }
+    }
+
+    input[type="submit"] {
+        padding: 10px 20px;
+        font-size: 10px;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .input-buttons {
+        a {
+            display: none;
+        }
+    }
+
+    input[type="submit"] {
+        padding: 10px 40px;
+        font-size: 16px;
     }
 }

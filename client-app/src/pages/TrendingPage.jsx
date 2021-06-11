@@ -6,17 +6,19 @@ import { useHttp } from "../hooks/http.hook"
 
 export const TrendingPage = () => {
     const context = useContext(AuthContext)
-    const { request } = useHttp()
+    const { request, loading } = useHttp()
 
     const [posts, setPosts] = useState([])
+    const [classes, setClasses] = useState(["slide-menu", "hide"])
 
     const deletePost = (id) => {
-        const index1 = context.posts.indexOf(id)
-        if (index1 > -1) {
-            context.posts.splice(index1, 1)
-        }
-
-        const index2 = posts.indexOf(id)
+        let index2
+        posts.filter((post, index) => {
+            if (post.id == id) {
+                index2 = index
+                return
+            }
+        })
         if (index2 > -1) {
             setPosts(
                 posts
@@ -24,6 +26,15 @@ export const TrendingPage = () => {
                     .concat(posts.slice(index2 + 1, posts.length))
             )
         }
+
+        const index1 = context.posts.indexOf(id)
+        if (index1 > -1) {
+            context.posts.splice(index1, 1)
+        }
+    }
+
+    const slideMenu = (classValue) => {
+        setClasses([classes[0], classValue])
     }
 
     useEffect(() => {
@@ -37,7 +48,7 @@ export const TrendingPage = () => {
         }
 
         loadPosts()
-    }, [])
+    }, [request])
 
     return (
         <div className="container">
@@ -104,7 +115,39 @@ export const TrendingPage = () => {
                     </div>
                 </div>
                 <div className="main-part">
-                    <h2>Trending</h2>
+                    <div className={classes.join(" ")}>
+                        <div className="slide-menu-links">
+                            <NavLink to="/home">Uploads</NavLink>
+                            <NavLink to="/profile">Profile</NavLink>
+                            <NavLink
+                                to="/trending"
+                                className="link-menu-active"
+                            >
+                                Trending
+                            </NavLink>
+                        </div>
+
+                        <i
+                            class="fas fa-times"
+                            onClick={() => slideMenu("hide")}
+                        ></i>
+                    </div>
+                    <div className="main-head">
+                        <h2>Trending</h2>
+                        <div className="side-menu">
+                            <i
+                                class="fas fa-bars"
+                                onClick={() => slideMenu("show")}
+                            ></i>
+                        </div>
+                    </div>
+                    {loading && posts.length === 0 && (
+                        <div className="post-loading-container">
+                            <div className="loading">
+                                <div className="post-loading"></div>
+                            </div>
+                        </div>
+                    )}
                     <div className="posts">
                         {posts.map((item, index) => {
                             return (

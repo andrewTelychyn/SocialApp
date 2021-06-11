@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using SocialApp.BL.Interfaces;
 using SocialApp.BL.BusinessModels;
 using SocialApp.BL.DTO;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace SocialApp.Controllers
 {
@@ -20,7 +22,8 @@ namespace SocialApp.Controllers
         {
             this.service = service;
         }
-
+        
+        [Authorize]
         [HttpPost]
         [Route("create")]
         public async Task<IActionResult> Create(PostDTO postDTO)
@@ -54,6 +57,7 @@ namespace SocialApp.Controllers
             return new OkObjectResult(result.Object);
         }
         
+        [Authorize]
         [HttpPost]
         [Route("smash-that-like-button")]
         public async Task<IActionResult> SmashLike(PostDTO postDTO)
@@ -86,6 +90,7 @@ namespace SocialApp.Controllers
             return new OkObjectResult(result.Object);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("get-uploads-posts")]
         public async Task<IActionResult> GetUploadsPosts(UserDTO userDTO)
@@ -107,7 +112,6 @@ namespace SocialApp.Controllers
         public IActionResult GetTrendingPosts()
         {
             var result = service.GetTrending();
-
             if(!result.Succedeed)
             {
                 System.Console.WriteLine(result.Message);
@@ -118,6 +122,7 @@ namespace SocialApp.Controllers
             return new OkObjectResult(result.Object);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("delete-post")]
         public async Task<IActionResult> DeletePost(PostDTO postDTO)

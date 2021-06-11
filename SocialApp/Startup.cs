@@ -15,6 +15,7 @@ using SocialApp.BL.Interfaces;
 using SocialApp.BL.BusinessModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
 
 namespace SocialApp
@@ -32,7 +33,7 @@ namespace SocialApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(optitons => optitons.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -47,6 +48,7 @@ namespace SocialApp
                         ValidAudience = JwtOptions.AUDIENCE,
 
                         ValidateLifetime = true,
+                        
 
                         IssuerSigningKey = JwtOptions.GetSymmetricSecurityKey(),
                         ValidateIssuerSigningKey = true

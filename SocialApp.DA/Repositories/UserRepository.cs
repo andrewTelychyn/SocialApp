@@ -45,12 +45,15 @@ namespace SocialApp.DA.Repositories
 
         public void Update(UserProfile Item, string Id)
         {
-            var local = context.UserProfiles.Local.FirstOrDefault(Item => Item.Id == Id);
-            if(local != null)
-            {
-                context.Entry(local).State = EntityState.Detached;
-            }
-            context.Entry(Item).State = EntityState.Modified;
+            // var local = context.UserProfiles.Local.FirstOrDefault(Item => Item.Id == Id);
+            // if(local != null)
+            // {
+
+            //     context.Entry(local).State = EntityState.Detached;
+            // }
+            // context.Entry(Item).State = EntityState.Modified;
+
+            context.UserProfiles.Update(Item);
         }
 
 

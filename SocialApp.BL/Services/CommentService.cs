@@ -63,6 +63,9 @@ namespace SocialApp.BL.Services
 
                 item.UserName = user.Name;
                 item.Date = DateTime.Now;
+                item.Id = id;
+
+                System.Console.WriteLine(item.UserName);
 
                 return new OperationDetails(true, "Successfully created", null, item);
             }
@@ -169,7 +172,28 @@ namespace SocialApp.BL.Services
                     list[i].LikesUserIds = comments[i].Likes.Select(like => like.UserProfileId).ToList();
                 }
 
-                return new OperationDetails(true, "Success", null, list.OrderBy(d => d.Date).Reverse());
+                return new OperationDetails(true, "Success", null, list.OrderBy(d => d.Date));
+            }
+            catch (Exception e)
+            {
+                return new OperationDetails(false, e.Message);
+            }
+        }
+
+        public async Task<OperationDetails> DeleteComment(string Id)
+        {
+            try
+            {
+                var comment = await database.Comments.GetItemAsync(Id);
+                if(comment == null)
+                    return new OperationDetails(false, "Object doesn't exists");
+
+
+                database.Comments.Delete(comment);
+
+                await database.Commit();
+
+                return new OperationDetails(true, "Successfully deleted");
             }
             catch (Exception e)
             {

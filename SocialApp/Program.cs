@@ -14,13 +14,14 @@ namespace SocialApp
     {
         public static void Main(string[] args)
         {
-            //CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().Run();
             
             //var lab2 = new Lab2();
             //var lab4 = new Lab4();
             //var lab5 = new Lab5();
             //var lab6 = new Lab6();
-            var lab7 = new Lab7();
+            //var lab7 = new Lab7();
+            //var lab8 = new Lab8();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

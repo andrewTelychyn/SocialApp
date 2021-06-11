@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using SocialApp.BL.Interfaces;
 using SocialApp.BL.BusinessModels;
 using SocialApp.BL.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace SocialApp.Controllers
@@ -25,9 +26,10 @@ namespace SocialApp.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "Welcome", "back!" };
         }
 
+        [Authorize]
         [HttpPost]
         [Route("add-comment")]
         public async Task<IActionResult> Create(CommentDTO commentDTO)
@@ -59,12 +61,29 @@ namespace SocialApp.Controllers
             System.Console.WriteLine("getting comments success");
             return new OkObjectResult(result.Object);
         }
-
+        [Authorize]
         [HttpPost]
         [Route("smash-that-like-button")]
         public async Task<IActionResult> SmashLike(CommentDTO commentDTO)
         {
             var result = await service.LikeComment(commentDTO.UserId, commentDTO.Id);
+
+            if(!result.Succedeed)
+            {
+                System.Console.WriteLine(result.Message);
+                return BadRequest(result.Message);
+            }
+
+            System.Console.WriteLine(result.Message);
+            return new OkObjectResult(new {Message = result.Message});
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("delete-comment")]
+        public async Task<IActionResult> DeleteComment(CommentDTO commentDTO)
+        {
+            var result = await service.DeleteComment(commentDTO.Id);
 
             if(!result.Succedeed)
             {

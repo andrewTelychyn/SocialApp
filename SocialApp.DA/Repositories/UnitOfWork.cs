@@ -32,7 +32,7 @@ namespace SocialApp.DA.Repositories
         public UnitOfWork(ApplicationDbContext context)
         {
             _applicationDbContext = context;
-            SeedData().GetAwaiter();
+            //SeedData().GetAwaiter();
         }
 
         public IRepository<Like> Likes

@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext"
 import { useHttp } from "../hooks/http.hook"
 
 export const ProfilePage = () => {
-    const { request } = useHttp()
+    const { request, loading } = useHttp()
     let { id } = useParams()
 
     const grey = "#E1E1E2"
@@ -33,6 +33,7 @@ export const ProfilePage = () => {
     const [doFollow, setDoFollow] = useState(false)
 
     const [posts, setPosts] = useState([])
+    const [classes, setClasses] = useState(["slide-menu", "hide"])
 
     const followClickHandler = async () => {
         try {
@@ -49,6 +50,16 @@ export const ProfilePage = () => {
                     color: green,
                     content: "FOLLOW",
                 })
+
+                const index = auth.following.indexOf(id)
+                if (index > 0) auth.following.splice(index, 1)
+
+                const index2 = dataProfile.following.indexOf(id)
+                if (index2)
+                    setDataProfile({
+                        ...dataProfile,
+                        followers: dataProfile.followers.splice(index2, 1),
+                    })
             } else {
                 setDoFollow(true)
                 setFollowStyle({
@@ -56,8 +67,19 @@ export const ProfilePage = () => {
                     color: white,
                     content: "FOLLOWING",
                 })
+
+                auth.following.push(id)
+
+                setDataProfile({
+                    ...dataProfile,
+                    followers: [...dataProfile.followers, id],
+                })
             }
         } catch (e) {}
+    }
+
+    const slideMenu = (classValue) => {
+        setClasses([classes[0], classValue])
     }
 
     const loadPosts = useCallback(async () => {
@@ -69,11 +91,10 @@ export const ProfilePage = () => {
             })
 
             if (data) {
-                //console.log(data)
                 setPosts(data)
             }
         } catch (e) {}
-    }, [auth.userId, request])
+    }, [auth.userId, request, id])
 
     const loadData = useCallback(async () => {
         if (!isMyProfile) {
@@ -203,7 +224,29 @@ export const ProfilePage = () => {
                     </div>
                 </div>
                 <div className="main-part">
-                    <h2>Profile Page</h2>
+                    <div className={classes.join(" ")}>
+                        <div className="slide-menu-links">
+                            <NavLink to="/home">Uploads</NavLink>
+                            <NavLink to="/profile" className="link-menu-active">
+                                Profile
+                            </NavLink>
+                            <NavLink to="/trending">Trending</NavLink>
+                        </div>
+
+                        <i
+                            class="fas fa-times"
+                            onClick={() => slideMenu("hide")}
+                        ></i>
+                    </div>
+                    <div className="main-head">
+                        <h2>Profile Page</h2>
+                        <div className="side-menu">
+                            <i
+                                class="fas fa-bars"
+                                onClick={() => slideMenu("show")}
+                            ></i>
+                        </div>
+                    </div>
                     <div className="profile-details">
                         <div className="image-body">
                             <img
@@ -279,6 +322,13 @@ export const ProfilePage = () => {
                     </div>
                     <div className="posts">
                         <h3>Recent posts</h3>
+                        {loading && posts.length === 0 && (
+                            <div className="post-loading-container">
+                                <div className="loading">
+                                    <div className="post-loading"></div>
+                                </div>
+                            </div>
+                        )}
                         {posts.map((item, index) => {
                             return (
                                 <Post
