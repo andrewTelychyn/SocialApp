@@ -1,0 +1,169 @@
+<!DOCTYPE html> 
+<html>
+<head> 
+<meta charset="UTF-8"> 
+<title>IТ-81 labs</title>
+<link rel="stylesheet" type="text/css" href="../src/colors.css">
+<link rel="stylesheet" type="text/css" href="../src/root.css"> 
+<script type="text/javascript" src="../src/script.js"></script>
+</head>
+<body> 
+	<div class="wrapper">
+		<div class="header">
+			<h2>
+				Звіти з лабораторних робіт
+			</h2>
+			<h2>
+				з дисципліни 
+				<span class="title">Технології .Net розробки веб-додатків</span>
+			</h2>
+			<h2>
+				студента групи ІТ-81 Теличина Андрія
+			</h2>
+		</div>
+		<div class="topbar flex horizontal-alignment">
+			<a class="topbar-item shadow" href="../index.html">Title</a>
+			<a class="topbar-item shadow" href="1.html">Lab 1</a>
+			<a class="topbar-item shadow" href="2.html">Lab 2</a>
+			<a class="topbar-item shadow" href="3.html">Lab 3</a>
+			<a class="topbar-item shadow" href="4.html">Lab 4</a>
+			<a class="topbar-item shadow" href="5.html">Lab 5</a>
+			<a class="topbar-item shadow" href="6.html">Lab 6</a>
+			<a class="topbar-item shadow active" href="7.html">Lab 7</a>
+			<a class="topbar-item shadow" href="8.html">Lab 8</a>
+			<a class="topbar-item shadow" href="9.html">Lab 9</a>
+		</div>
+		<div class="main">
+            <div id="menu">
+            	<div class="dropdown">
+                	<a class="menu-item flex" onclick="ChangeTab(this, '1')">1 Тема, мета та постановка задачі.</a>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex" onclick="ChangeTab(this, '2')">2. Місце розташування проекту. Середовище розробки</a>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex">3. Кодування ПЗ (програмування)</a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '3')"> 3.1. Некоректна авторизація</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '4')">3.2. Фільтри виключень</a>
+						<a class="submenu-item flex" onclick="ChangeTab(this, '5')"> 3.3. Виключення при обробці мисивів</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '6')">3.4. Системні виключення</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '7')">3.5. Власні виключення</a>
+               		</div>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex">4. Впровадження та супроводження ПЗ</a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex" href='../src/SocialApp/'>4.1. Папка з проектом</a>
+                		<a class="submenu-item flex" href="../src/Exe-file/App-version2.exe" target="_blank">4.2. Запуск ехе-файла</a>
+               		</div>
+                </div>
+				<div class="dropdown">
+					<a class="menu-item flex" onclick="ChangeTab(this, '8')">Висновки</a>
+				</div>
+            </div>
+    
+            <div id="content">
+                <div id="1" class="active-item">
+                    <p style="margin: 0px  0px 0px 40px"><strong>Тема:</strong> ВИКЛЮЧНІ СИТУАЦІЇ.
+                    </p>
+                    <p style="padding: 0  0 0 40px">
+                        <strong>Мета:</strong> придбати практичні навички роботи з виключними ситуаціями, які виникають при роботі програми.
+                    </p>
+                    <p>
+                    <ul style="list-style-type: none"><strong> Постановка задачі:</strong>
+                        <li>До програмного коду попередніх лабораторних робіт добавити та описати: </li>
+						<li>
+                            <ul style="padding: 0px; list-style-type: none">
+                                <li style="padding: 0px 30px">3.1. виключення, яке можуть виникати при некоректній авторизації;</li>
+                                <li style="padding: 0px 30px">3.2. виключення, з застосуванням фільтрів виключення;</li>
+                                <li style="padding: 0px 30px">3.3. виключення, які виникають при обробці масивів;</li>
+								<li style="padding: 0px 30px">3.4. системні виключення;</li>
+                                <li style="padding: 0px 30px">3.5. власні виключення;</li>
+                                <li style="padding: 0px 30px">3.6. протестувати програму, зробити висновки.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    </p>
+                   
+                </div>
+                <div id="2" class="item">
+					<p>
+						<strong>Місце розташування проекту: </strong><a href="https://github.com/andrewTelychyn/SocialApp">посилання.</a>
+					</p>
+					<p>
+						<strong>Середовище розробки: </strong> в ході реалізації проекту в основому використовуються дві програми - Visual Studio 2019 та Visual Studio Code.
+					</p>
+				</div>
+                <div id="3" class="item">
+					<h2>НЕКОРЕКТНА АВТОРИЗАЦІЯ</h2>
+					
+					<h3>Code</h3>
+					<img src="../src/Lab7/LoginEx_1.jpg" width="80%" height="80%" />
+					<img src="../src/Lab7/LoginEx_2.jpg" width="80%" height="80%" />
+				</div>
+                <div id="4" class="item">
+					<h2>ФІЛЬТРИ ВИКЛЮЧЕНЬ</h2>
+					
+					<h3>Code</h3>
+					<img src="../src/Lab7/SystemEx_1.jpg" width="80%" height="80%" />
+					<img src="../src/Lab7/SystemEx_2.jpg" width="80%" height="80%" />
+
+
+					<h3>Main</h3>
+					<img src="../src/Lab7/Main.jpg" width="80%" height="80%" />
+
+					<h3>Out</h3>
+					<img src="../src/Lab7/Output.jpg" width="80%" height="80%" />
+				</div>
+                <div id="5" class="item">
+					<h2>ВИКЛЮЧЕННЯ ПРИ ОБРОБЦІ МАСИВІВ</h2>
+					
+					<h3>Code</h3>
+					<img src="../src/Lab7/ArrayEx.jpg" width="80%" height="80%" />
+
+					<h3>Main</h3>
+					<img src="../src/Lab7/Main.jpg" width="80%" height="80%" />
+
+					<h3>Out</h3>
+					<img src="../src/Lab7/Output.jpg" width="80%" height="80%" />
+				</div>
+				<div id="6" class="item">
+					<h2>СИСТЕМНІ ВИКЛЮЧЕННЯ</h2>
+					
+					<h3>Code</h3>
+					<img src="../src/Lab7/SystemEx_1.jpg" width="80%" height="80%" />
+					<img src="../src/Lab7/SystemEx_2.jpg" width="80%" height="80%" />
+
+					<h3>Main</h3>
+					<img src="../src/Lab7/Main.jpg" width="80%" height="80%" />
+
+					<h3>Out</h3>
+					<img src="../src/Lab7/Output.jpg" width="80%" height="80%" />
+				</div>
+				<div id="7" class="item">
+					<h2>ВЛАСНІ ВИКЛЮЧЕННЯ</h2>
+					
+					<h3>Code</h3>
+					<img src="../src/Lab7/MyEx.jpg" width="80%" height="80%" />
+
+					<h3>Main</h3>
+					<img src="../src/Lab7/Main.jpg" width="80%" height="80%" />
+
+					<h3>Out</h3>
+					<img src="../src/Lab7/Output.jpg" width="80%" height="80%" />
+				</div>
+				
+				<div id="8" class="item">
+					<h2>
+						Висновок
+					</h2>
+					<p style="margin-right:20px;">
+						В ході виконання даної лабораторної роботи я придбав практичні навички роботи з виключними ситуаціями, які виникають при роботі програми.
+					</p>
+				</div>
+            </div>
+        </div>
+		<div class="footer"></div>
+	</div>
+</html>

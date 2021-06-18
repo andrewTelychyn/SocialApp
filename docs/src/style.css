@@ -1,0 +1,284 @@
+body{
+    font-family: 'Ubuntu';
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: column;
+    height: 100vh;
+    width: 100%;
+    line-height: 1.4rem;
+    background: var(--whitesmoke);
+    color: var(--dark);
+    text-align: justify;
+    box-sizing: border-box;
+    /* overflow-y: hidden; */
+}
+
+img{
+    width: 100%;
+    height: 100%;
+}
+
+a{
+    outline-style: none;
+    text-decoration: none;
+    color: var(--link);
+}
+
+a:hover{
+    cursor: pointer;
+}
+
+.wrapper{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.flex{
+    display: flex;
+}
+
+.flex-column{
+    flex-direction: column;
+}
+
+.center{
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    text-align: center;
+    margin: auto;
+}
+
+.space-between{
+    justify-content: space-between;
+}
+
+.vertical-alignment{
+    flex-direction: column;
+}
+
+.horizontal-alignment{
+    flex-direction: row;
+}
+
+.title{
+    color: var(--main);
+}
+
+.icon{
+    margin: 0 10px 0 0;
+}
+
+.header{
+    background: var(--main-background);
+    color: var(--whitesmoke);
+    padding: 1%;
+    font-size: small;
+    text-align: center;
+    /* height: 50px; */
+}
+
+.labs-list{
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.labs-list-hidden{
+    display: flex;
+}
+
+.labs-list-hidden a{
+    margin: 6px 24px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--dark);
+}
+
+.labs-list-hidden a:hover{
+    color: var(--main);
+}
+
+.labs-list-hidden-wrapper{
+    flex-direction: column;
+    background: var(--whitesmoke);
+    position: absolute;
+    width: 100%;
+    display: none;
+    margin: 12px 0;
+}
+
+.labs-list-hidden-wrapper > span{
+    justify-content: space-between;
+    padding: 0 24px;
+    font-weight: bold;
+}
+
+.open-labs-list{
+    position: absolute;
+    background: var(--whitesmoke);
+    width: 100%;
+    z-index: 3;
+}
+
+.expand{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: var(--link);
+}
+
+.expand:hover{
+    cursor: pointer;
+}
+
+.shadow{
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%), 0 0 0 1px rgb(0 0 0 / 4%);
+}
+
+.no-border{
+    border: 0px !important;
+}
+
+.lab-item{
+    padding: 10px 15px;
+    text-align: center;
+    border-top: 3px solid #232f3e;
+    border-width: 3px 1px 1px 1px;
+    border-color: var(--darkgray);
+    background: var(--whitesmoke);
+    border-style: solid;
+    margin: 1% 0;
+    max-width: 50%;
+    min-width: 7%;
+    color: var(--link);
+    font-size: medium;
+}
+
+.lab-item:hover, .lab-item.active{
+    border-color: var(--link);
+    color: var(--whitesmoke);
+    background: var(--link);
+}
+
+.home{
+    color: var(--main-background);
+    /* margin: 10px 0; */
+}
+
+.home-icon-link{
+    display: none;
+    color: var(--whitesmoke);
+    margin: 5px;
+}
+
+.home-icon-link > i{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.home:hover{
+    border-color: var(--whitesmoke);
+    color: var(--link);
+    background: var(--whitesmoke);
+}
+
+.main{    
+    width: 100%;
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    /* overflow-y: auto; */
+}
+
+#menu{
+    border-top: 1px solid var(--silver);
+    background: var(--main-background);
+    padding: 12px 0;
+    display: block;
+    flex-direction: column;
+    overflow-y: auto;
+    z-index: 2;
+    text-align: left;
+}
+
+.menu-item{
+    color: var(--silver);
+    min-height: 36px;
+    flex-wrap: wrap;
+    padding: 6px;
+}
+
+.menu-item:hover{
+    color: var(--main);
+    cursor: pointer;
+}
+
+.active-link{
+    color: var(--main);
+}
+
+.item{
+    display: none;
+}
+
+.active-item{
+    flex-wrap: wrap;
+}
+
+#content{
+    padding: 6px;
+    z-index: 1;
+}
+
+@media screen and (max-width: 800px){
+    .labs-list{
+        justify-content: end;
+    }
+
+    .lab-item{
+        padding: 5px 10px;
+        margin: 5px 3px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    /* .header{
+        position: sticky;
+        top: 0;
+    } */
+
+    .main{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menu-item{
+        margin: 0;
+    }
+
+    .home, #menu{
+        display: none;
+    }
+
+    #menu{
+        position: absolute;
+        width: 100%;
+    }
+
+    .home-icon-link{
+        display: flex;
+    }
+
+    .labs-list{
+        display: none;
+    }
+
+    .labs-list-hidden-wrapper{
+        display: block;
+        position: relative;
+    }
+}

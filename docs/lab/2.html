@@ -1,0 +1,123 @@
+<!DOCTYPE html> 
+<html>
+<head> 
+<meta charset="UTF-8"> 
+<title>IТ-81 labs</title>
+<link rel="stylesheet" type="text/css" href="../src/colors.css">
+<link rel="stylesheet" type="text/css" href="../src/root.css"> 
+<script type="text/javascript" src="../src/script.js"></script>
+</head>
+<body> 
+	<div class="wrapper">
+		<div class="header">
+			<h2>
+				Звіти з лабораторних робіт
+			</h2>
+			<h2>
+				з дисципліни 
+				<span class="title">Технології .Net розробки веб-додатків</span>
+			</h2>
+			<h2>
+				студента групи ІТ-81 Теличина Андрія
+			</h2>
+		</div>
+		<div class="topbar flex horizontal-alignment">
+			<a class="topbar-item shadow" href="../index.html">Title</a>
+			<a class="topbar-item shadow" href="1.html">Lab 1</a>
+			<a class="topbar-item shadow active" href="2.html">Lab 2</a>
+			<a class="topbar-item shadow" href="3.html">Lab 3</a>
+			<a class="topbar-item shadow" href="4.html">Lab 4</a>
+			<a class="topbar-item shadow" href="5.html">Lab 5</a>
+			<a class="topbar-item shadow" href="6.html">Lab 6</a>
+			<a class="topbar-item shadow" href="7.html">Lab 7</a>
+			<a class="topbar-item shadow" href="8.html">Lab 8</a>
+			<a class="topbar-item shadow" href="9.html">Lab 9</a>
+		</div>
+		<div class="main">
+            <div id="menu">
+            	<div class="dropdown">
+                	<a class="menu-item flex " onclick="ChangeTab(this, '1')">1 Тема, мета та постановка задачі.</a>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex">2 Проектування ПЗ</a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '2')">2.1  Проектування структури ПЗ  - UML-діаграма класів</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '3')">2.2  Таблиця класів</a>
+               		</div>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex">3. Кодування (програмування)  </a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '4')">3.1 Файлова структура проекту</a>
+                        <a class="submenu-item flex" onclick="ChangeTab(this, '5')">3.2    Програмні коди класів з конструкторами</a>
+                        <a class="submenu-item flex" onclick="ChangeTab(this, '6')">3.3 Програмний код класу Program</a>
+      
+               		</div>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex">4. Впровадження та супроводження ПЗ</a>
+               	  	<div class="submenu">
+                		<a class="submenu-item flex" href='../src/SocialApp/'>5.1. Папка з проектом</a>
+                		<a class="submenu-item flex" href="../src/App-version1.exe" target="_blank">5.2. Запуск ехе-файла</a>
+               		</div>
+                </div>
+            </div>
+    
+            <div id="content">
+                <div id="1" class="active-item">
+                    <p style="margin: 0px  0px 0px 40px"><strong>Тема:</strong> КОНСТРУКТОРИ.МОДИФИКАТОРЫ ДОСТУПУ В C# И UML. ДІАГРАМИ КЛАСІВ. ВІДНОШЕННЯ МІЖ КЛАСАМИ
+                    </p>
+                    <p style="padding: 0  0 0 40px">
+                        <strong>Мета:</strong> Здійснити об’єктно-орієнтоване проектування з урахуванням модифікаторів доступу в C# и UML і добавлення конструкторів у діаграму класів та реалізація їх у програмному коді. Вивчити особливості використання різних видів конструкторів. Доповнити програму конструкторами різних видів
+                    </p>
+                    <p>
+                    <ul style="list-style-type: none"><strong> Постановка задачі:</strong>
+                        <li>1.  Доповнити інтерфейси та реалізації класів методами-конструкторами класів (використати конструктори по умовчанню, ініціалізації (введення значень з клавіатури, завдання їх за виразами та через виклик інших методів-членів класу). </li>
+                        <li>2.  Протестувати програму, демонструючи послідовність викликів конструкторів виведенням на екран повідомлень про створення об’єктів</li>
+                        <li>
+                            <ul style="padding: 0px; list-style-type: none">3.  Продемонструвати створення об’єктів за допомогою різних видів конструкторів: 
+                                <li style="padding: 0px 30px">3.1. через ініціалізацію значень атрибутів класів списком аргументів, використовуючи конструктор ініціалізації;</li>
+                                <li style="padding: 0px 30px">3.2. через присвоєння одних об’єктів іншим того самого типу, використовуючи конструктор копіювання;</li>
+                                <li style="padding: 0px 30px">3.3. створення об’єкта за допомогою конструктора за замовчуванням.</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    </p>
+                   
+                </div>
+                <div id="2" class="item">
+					<h2>Діаграма класів</h2>
+                	<img src="../src/img/classDiagram.jpg" width="80%" height="80%" />
+
+				</div>
+                <div id="3" class="item">
+					<h2>Таблиця класів</h2>
+                	<img src="../src/img/table_class-methods1.jpg" style="width: 50%; height: 50%;" />
+                	<img src="../src/img/table_class-methods2.jpg" style="width: 50%; height: 50%;"/>
+                	<img src="../src/img/table_class-methods3.jpg" style="width: 50%; height: 50%;"/>
+				</div>
+                <div id="4" class="item">
+					<h2>Файлова структура проекту</h2>
+                	<img src="../src/img/solutionExplorer.jpg" style="width: 50%; height: 50%;" />
+				</div>
+                <div id="5" class="item">
+					<h2>Програмний код класів з конструкторами</h2>
+					<p>Оскільки класи мого проекту погано підходять для тестування коду, використовуючи різні види конструкторів, то я рішив створити два тимчасові класи для даної лабораторної роботи</p>
+					<h3>Class A</h3>
+                	<img src="../src/img/lab2-classA.jpg" style="width: 50%; height: 50%;"/>
+					<h3>Class B</h3>
+                	<img src="../src/img/lab2-classB.jpg" style="width: 50%; height: 50%;"/>
+				</div>
+
+				<div id="6" class="item">
+					<h2>Програмний код класу Program</h2>
+                	<img src="../src/img/lab2-main-code.jpg" style="width: 50%; height: 50%;"/>
+					<h3>Вивід в консоль</h3>
+                	<img src="../src/img/lab2-console-out.jpg" style="width: 50%; height: 50%;"/>
+				</div>
+            </div>
+        </div>
+		<div class="footer"></div>
+	</div>
+</html>

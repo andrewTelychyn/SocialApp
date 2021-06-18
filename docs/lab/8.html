@@ -1,0 +1,142 @@
+<!DOCTYPE html> 
+<html>
+<head> 
+<meta charset="UTF-8"> 
+<title>IТ-81 labs</title>
+<link rel="stylesheet" type="text/css" href="../src/colors.css">
+<link rel="stylesheet" type="text/css" href="../src/root.css"> 
+<script type="text/javascript" src="../src/script.js"></script>
+</head>
+<body> 
+	<div class="wrapper">
+		<div class="header">
+			<h2>
+				Звіти з лабораторних робіт
+			</h2>
+			<h2>
+				з дисципліни 
+				<span class="title">Технології .Net розробки веб-додатків</span>
+			</h2>
+			<h2>
+				студента групи ІТ-81 Теличина Андрія
+			</h2>
+		</div>
+		<div class="topbar flex horizontal-alignment">
+			<a class="topbar-item shadow" href="../index.html">Title</a>
+			<a class="topbar-item shadow" href="1.html">Lab 1</a>
+			<a class="topbar-item shadow" href="2.html">Lab 2</a>
+			<a class="topbar-item shadow" href="3.html">Lab 3</a>
+			<a class="topbar-item shadow" href="4.html">Lab 4</a>
+			<a class="topbar-item shadow" href="5.html">Lab 5</a>
+			<a class="topbar-item shadow" href="6.html">Lab 6</a>
+			<a class="topbar-item shadow" href="7.html">Lab 7</a>
+			<a class="topbar-item shadow active" href="8.html">Lab 8</a>
+			<a class="topbar-item shadow" href="9.html">Lab 9</a>
+		</div>
+		<div class="main">
+            <div id="menu">
+            	<div class="dropdown">
+                	<a class="menu-item flex" onclick="ChangeTab(this, '1')">1 Тема, мета та постановка задачі.</a>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex" onclick="ChangeTab(this, '2')">2. Місце розташування проекту. Середовище розробки</a>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex">3. Кодування ПЗ (програмування)</a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '3')">Завдання 4.1</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '4')">Завдання 4.2</a>
+						<a class="submenu-item flex" onclick="ChangeTab(this, '5')"> Завдання 4.3</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '6')">Завдання 4.4</a>
+               		</div>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex">4. Впровадження та супроводження ПЗ</a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex" href='../src/SocialApp/'>4.1. Папка з проектом</a>
+                		<a class="submenu-item flex" href="../src/Exe-file/App-version2.exe" target="_blank">4.2. Запуск ехе-файла</a>
+               		</div>
+                </div>
+				<div class="dropdown">
+					<a class="menu-item flex" onclick="ChangeTab(this, '8')">Висновки</a>
+				</div>
+            </div>
+    
+            <div id="content">
+				<div id="1" class="active-item">
+                    <p style="margin: 0px  0px 0px 40px"><strong>Тема:</strong> ПОТОКИ.
+                    </p>
+                    <p style="padding: 0  0 0 40px">
+                        <strong>Мета:</strong> придбати практичні навички роботи з потоками.
+                    </p>
+                    <p>
+                    <ul style="list-style-type: none"><strong> Постановка задачі:</strong>
+                        <li>В окремому проекті виконати завдання пункту №3</li>
+						<li>
+                            <img src="../src/Lab8/ToDO.jpg" width="50%" height="50%" />
+                            <img src="../src/Lab8/ToDO2.jpg" width="50%" height="50%" />
+                        </li>
+                    </ul>
+                    </p>
+                   
+                </div>
+                <div id="2" class="item">
+					<p>
+						<strong>Місце розташування проекту: </strong><a href="https://github.com/andrewTelychyn/SocialApp">посилання.</a>
+					</p>
+					<p>
+						<strong>Середовище розробки: </strong> в ході реалізації проекту в основому використовуються дві програми - Visual Studio 2019 та Visual Studio Code.
+					</p>
+				</div>
+                <div id="3" class="item">
+					<h2>Завдання 4.1</h2>
+					
+					<h3>Class</h3>
+					<img src="../src/Lab8/Task1_Class1.jpg" width="80%" height="80%" />
+					<img src="../src/Lab8/Task1_Class2.jpg" width="80%" height="80%" />
+				</div>
+                <div id="4" class="item">
+					<h2>Завдання 4.2</h2>
+					
+					<h3>Class</h3>
+					<img src="../src/Lab8/Task2_Class1.jpg" width="80%" height="80%" />
+					<img src="../src/Lab8/Task2_Class2.jpg" width="80%" height="80%" />
+
+					<h3>Code</h3>
+					<img src="../src/Lab8/Task2_Code1.jpg" width="80%" height="80%" />
+					<img src="../src/Lab8/Task2_Code2.jpg" width="80%" height="80%" />
+				</div>
+                <div id="5" class="item">
+					<h2>Завдання 4.3</h2>
+					
+					<h3>Class</h3>
+					<img src="../src/Lab8/Task2_Class3.jpg" width="80%" height="80%" />
+
+					<h3>Code</h3>
+					<img src="../src/Lab8/Task2_Code3.jpg" width="80%" height="80%" />
+				</div>
+				<div id="6" class="item">
+					<h2>Завдання 4.4</h2>
+					
+					<h3>Class</h3>
+					<img src="../src/Lab8/Task4_Class.jpg" width="80%" height="80%" />
+
+					<h3>Code</h3>
+					<img src="../src/Lab8/Task4_Code.jpg" width="80%" height="80%" />
+
+					<h3>Console</h3>
+					<img src="../src/Lab8/Task4_Output.jpg" width="80%" height="80%" />
+				</div>
+				<div id="8" class="item">
+					<h2>
+						Висновок
+					</h2>
+					<p style="margin-right:20px;">
+						В ході виконання даної лабораторної роботи я придбав практичні навички роботи з потоками.
+					</p>
+				</div>
+            </div>
+        </div>
+		<div class="footer"></div>
+	</div>
+</html>

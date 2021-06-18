@@ -1,0 +1,236 @@
+<!DOCTYPE html> 
+<html>
+<head> 
+<meta charset="UTF-8"> 
+<title>IТ-81 labs</title>
+<link rel="stylesheet" type="text/css" href="../src/colors.css">
+<link rel="stylesheet" type="text/css" href="../src/root.css"> 
+<script type="text/javascript" src="../src/script.js"></script>
+</head>
+<body> 
+	<div class="wrapper">
+		<div class="header">
+			<h2>
+				Звіти з лабораторних робіт
+			</h2>
+			<h2>
+				з дисципліни 
+				<span class="title">Технології .Net розробки веб-додатків</span>
+			</h2>
+			<h2>
+			студента групи ІТ-81 Теличина Андрія
+			</h2>
+		</div>
+		<div class="topbar flex horizontal-alignment">
+			<a class="topbar-item shadow" href="../index.html">Title</a>
+			<a class="topbar-item shadow active" href="1.html">Lab 1</a>
+			<a class="topbar-item shadow" href="2.html">Lab 2</a>
+			<a class="topbar-item shadow" href="3.html">Lab 3</a>
+			<a class="topbar-item shadow" href="4.html">Lab 4</a>
+			<a class="topbar-item shadow" href="5.html">Lab 5</a>
+			<a class="topbar-item shadow" href="6.html">Lab 6</a>
+			<a class="topbar-item shadow" href="7.html">Lab 7</a>
+			<a class="topbar-item shadow" href="8.html">Lab 8</a>
+			<a class="topbar-item shadow" href="9.html">Lab 9</a>
+		</div>
+		<div class="main">
+            <div id="menu">
+            	<div class="dropdown">
+                	<a class="menu-item flex">1. Характеристика об’єкта автоматизації</a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex active-link" onclick="ChangeTab(this, '1')">1.1. Опис об'єкта управління</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '2')">1.2. Мета розробки проекту</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '3')">1.3. Бізнес-задачі</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '4')">1.4. Бізнес-процеси</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '5')">1.5. Сценарії дій системи</a>
+               		</div>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex">2. Об’єктно-орієнтована декомпозиції  предметного середовища</a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '6')">2.1. Таблиця обґрунтування класів</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '7')">2.2. Таблиця обґрунтування методів</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '8')">2.3. Об'єкто-орієнтована декомпозиція предметного середовища</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '9')">2.4. Функціональні вимоги замовника - UML-діаграми</a>
+               		</div>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex">3. Проектування ПЗ</a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '10')">3.1. Проектування структури ПЗ  - UML-діаграма класів</a>
+      
+               		</div>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex">4. Кодування (програмування)</a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '11')"> 4.1. Файлова структура проекту</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '12')">4.2. Специфікації методів у вигляді таблиці з переліком сигнатури методів, семантики методів та їх параметрів</a>
+               		</div>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex">5. Впровадження та супроводження ПЗ</a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex" href='../src/SocialApp/'>5.1. Папка з проектом</a>
+                		<a class="submenu-item flex" href="../src/App-version1.exe" target="_blank">5.2. Запуск ехе-файла</a>
+               		</div>
+                </div>
+            </div>
+    
+            <div id="content">
+                <div id="1" class="active-item">
+                    <h2>Опис об'єкта управління</h2>
+                    <p>
+                    	Об'єктом управління є невеличка соціальна мережа.     
+					</p>
+					<p>
+						При першому заході на сайт користувач має змогу переглянути різні пости користувачів. Тобто їхні думки, роздуми, факти і тд. Взаємодіяти будь-яким чином незареєестрований користувач не може. Спершу потрібно ввійти в систему.
+					</p>
+                    <p>
+						Якщо користувач не має акаунта, і він вперше на сайті, то йому пропонується зареєструватись. Якщо ж він вже зараєстрований, то він має змогу ввійти в систему. Для входу потрібно ввести емейл користувача та пароль. При реєестрації потрібно ввести і інші дані користувача, такі як: біо, фотографія і тд.
+                     </p>
+                     <p>
+                     	Коли користувач вже ввійшов в систему, то він має змогу повністю взаємодіяти з функціоналом сайту. У нього появляється змога писати свої пости та реагувати на пости інших - вподобляти чи писати коментарі. При цьому інші користувачі так само отримують змогу реагувати на ваші пости. Користувач також отримує змогу підписуватись на інші профілі для того, щоб в майбутньому переглядати пости саме вибраних людей. До того ж є можливість видаляти свої пости та коментарі в разі потреби.
+                     </p>
+					 <p>
+						 Адміністратор сайту має змогу блокувати різних користувачів та видаляти їх пости в разі потреби. Для того щоб зайти в ролі адміністратора потрібно ввести необхідні дані при вході в систему.
+					 </p>
+                    <!-- <img src="4.jpg"/> -->
+                </div>
+                <div id="2" class="item">
+                	<h2>Мета розробки проекту</h2>
+                	<ul>
+                		<li>отримання досвіду розробки подібної програми про соціальну мережу.</li>
+                		<li>надання люядм ще одної можливості обмінюватись думками.</li>
+                	</ul>
+                </div>
+                <div id="3" class="item">
+                	<h2>Бізнес-задачі</h2>
+                	<ul>
+                		<li>Написання посту</li>
+                		<li>Підписання на профіль</li>
+                		<li>Коментування</li>
+                		<li>Вподобання</li>
+                	</ul>
+                </div>
+                <div id="4" class="item">
+                	<h2>Бізнес-процеси</h2>
+                	<ul>
+                		<li>Видалення посту</li>
+                		<li>Переглянути профіль інших користувачів</li>
+                		<li>Відписування від іншого профілю</li>
+                		<li>Перегляд коментарів під постом</li>
+                		<li>Написання коментару</li>
+                		<li>Видалення коментару</li>
+                		<li>Вподобання посту</li>
+                		<li>Вподобання коментару</li>
+                	</ul>
+                </div>
+                <div id="5" class="item">
+                	<h2>Сценарії дії системи</h2>
+                	<p>
+                		Користувач
+                	</p>
+                	<ol>
+                		<li>Користувач виконує вхід до системи</li>
+                		<li>Пише пост</li>
+                		<li>Видаляє пост</li>
+                		<li>Переглядає профілі інших</li>
+                		<li>Підписується на профілі інших</li>
+                		<li>Відписується від інших профілів</li>
+                		<li>Переглядає пости</li>
+                		<li>Переглядає коментарі</li>
+                		<li>Добавляє коментар</li>
+                		<li>Видаляє коментар</li>
+                		<li>Вподобляє коментар</li>
+                		<li>Вподобляє пост</li>
+					</ol>
+
+                	<p>
+                		Адміністратор
+                	</p>
+                	<ol>
+                		<li>Адміністратор виконує вхід до системи</li>
+                		<li>Отримує доступ даних користувачів</li>
+                		<li>Слідкує за порядком</li>
+                		<li>Блокує користувача</li>
+                		<li>Видаляє повідомлення</li>
+					</ol>
+                </div>
+                <div id="6" class="item">
+                	<h2>Таблиця обґрунтування класів</h2>
+                	<img src="../src/img/class.jpg" width="80%" height="80%" />
+                </div>
+                <div id="7" class="item">
+                	<h2>Таблиця обґрунтування методів</h2>
+                	<img src="../src/img/method.jpg" width="80%" height="80%" />
+                </div>
+                <div id="8" class="item">
+                	<h2>Діаграма об'єктів</h2>
+                	<img src="../src/img/objectDiagram.jpg" width="80%" height="80%" />
+                </div>
+                <div id="9" class="item">
+                	<h2>Функціональні вимоги замовника - UML-діаграми</h2>
+                	<img src="../src/img/usecase.jpg" width="80%" height="80%" />
+                </div>
+                <div id="10" class="item">
+                	<h2>Діаграма класів</h2>
+                	<p>
+                		Моделювання процесу соціальної мережі
+                		Діаграма класів для проекту "Невеличка соціальна мережа". Було створено 27 класів та побудовані зв'язки між ними:
+                	</p>
+                	<ul>
+                		<li>ApplicationUser - UserIdentity — Наслідування, оскільки один об'єкт наслідує функціонал іншого</li>
+                		<li>ApplicationUser - UserProfile — Агрегація, оскільки один об'єкт може існувати без іншого</li>
+                		<li>UserProfile - UserRepository — Асоціація, оскільки один об'єкт не залежить від іншого</li>
+                		<li>Post - PostRepository — Асоціація, оскільки один об'єкт не залежить від іншого</li>
+                		<li>Comment - CommentRepository — Асоціація, оскільки один об'єкт не залежить від іншого</li>
+                		<li>CommentRepository - IRepository — Реалізація, оскільки один об'єкт реалізувує функціонал іншого</li>
+                		<li>PostRepository - IRepository — Реалізація, оскільки один об'єкт реалізувує функціонал іншого</li>
+                		<li>UserRepository - IRepository — Реалізація, оскільки один об'єкт реалізувує функціонал іншого</li>
+						<li>CommentRepository - ApplicationDbContext — Агрегація, оскільки один об'єкт може існувати без іншого</li>
+                		<li>PostRepository - ApplicationDbContext — Агрегація, оскільки один об'єкт може існувати без іншого</li>
+                		<li>UserRepository - ApplicationDbContext — Агрегація, оскільки один об'єкт може існувати без іншого</li>
+                		<li>ApplicationUserManager - ApplicationUser — Асоціація, оскільки один об'єкт не залежить від іншого</li>
+                		<li>ApplicationUserManager - UserManager — Наслідування, оскільки один об'єкт наслідує функціонал іншого</li>
+                		<li>IUnitOfWork - ApplicationUserManager — Композиція, оскільки один об'єкт не може існувати без іншого</li>
+                		<li>IUnitOfWork - IRepository — Композиція, оскільки один об'єкт не може існувати без іншого</li>
+                		<li>IUnitOfWork - UnitOfWork — Реалізація, оскільки один об'єкт реалізувує функціонал іншого</li>
+                		<li>UnitOfWork - ApplicationDbContext — Агрегація, оскільки один об'єкт може існувати без іншого</li>
+                		<br />
+						<li>PostService - IUnitOfWork — Агрегація, оскільки один об'єкт може існувати без іншого</li>
+						<li>CommentService - IUnitOfWork — Агрегація, оскільки один об'єкт може існувати без іншого</li>
+						<li>UserService - IUnitOfWork — Агрегація, оскільки один об'єкт може існувати без іншого</li>
+						<li>ApplicationUserService - IUnitOfWork — Агрегація, оскільки один об'єкт може існувати без іншого</li>
+						<li>PostService - AutoMapper — Композиція, оскільки один об'єкт не може існувати без іншого</li>
+						<li>CommentService - AutoMapper — Композиція, оскільки один об'єкт не може існувати без іншого</li>
+						<li>UserService - AutoMapper — Композиція, оскільки один об'єкт не може існувати без іншого</li>
+						<li>ApplicationUserService - AutoMapper — Композиція, оскільки один об'єкт не може існувати без іншого</li>
+						<li>PostService - IPostService — Реалізація, оскільки один об'єкт реалізувує функціонал іншого</li>
+						<li>CommentService - ICommentService — Реалізація, оскільки один об'єкт реалізувує функціонал іншого</li>
+						<li>UserService - IUserService — Реалізація, оскільки один об'єкт реалізувує функціонал іншого</li>
+						<li>ApplicationUserService - IApplicationUserService — Реалізація, оскільки один об'єкт реалізувує функціонал іншого</li>
+						<li>OperationDetails - IPostService — Асоціація, оскільки один об'єкт не залежить від іншого</li>
+						<li>OperationDetails - ICommentService — Асоціація, оскільки один об'єкт не залежить від іншого</li>
+						<li>OperationDetails - IUserService — Асоціація, оскільки один об'єкт не залежить від іншого</li>
+						<li>OperationDetails - IApplicationUserService — Асоціація, оскільки один об'єкт не залежить від іншого</li>
+						<li>PostDTO - IPostService — Асоціація, оскільки один об'єкт не залежить від іншого</li>
+						<li>CommentDTO - ICommentService — Асоціація, оскільки один об'єкт не залежить від іншого</li>
+						<li>UserDTO - IUserService — Асоціація, оскільки один об'єкт не залежить від іншого</li>
+						<li>UserDTO - IApplicationUserService — Асоціація, оскільки один об'єкт не залежить від іншого</li>
+                	</ul>
+                	<img src="../src/img/classDiagram.jpg" width="80%" height="80%" />
+                </div>
+                <div id="11" class="item">
+					<h2>Файлова структура проекту</h2>
+                	<img src="../src/img/solutionExplorer.jpg" width="40%" height="40%" />
+				</div>
+                <div id="12" class="item">
+					<h2>Специфікації функцій у вигляді таблиці</h2>
+                	<img src="../src/img/methodsSemantic.jpg" width="40%" height="40%" />
+				</div>
+            </div>
+        </div>
+		<div class="footer"></div>
+	</div>
+</html>

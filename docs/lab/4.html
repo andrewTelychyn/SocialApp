@@ -1,0 +1,163 @@
+<!DOCTYPE html> 
+<html>
+<head> 
+<meta charset="UTF-8"> 
+<title>IТ-81 labs</title>
+<link rel="stylesheet" type="text/css" href="../src/colors.css">
+<link rel="stylesheet" type="text/css" href="../src/root.css"> 
+<script type="text/javascript" src="../src/script.js"></script>
+</head>
+<body> 
+	<div class="wrapper">
+		<div class="header">
+			<h2>
+				Звіти з лабораторних робіт
+			</h2>
+			<h2>
+				з дисципліни 
+				<span class="title">Технології .Net розробки веб-додатків</span>
+			</h2>
+			<h2>
+				студента групи ІТ-81 Теличина Андрія
+			</h2>
+		</div>
+		<div class="topbar flex horizontal-alignment">
+			<a class="topbar-item shadow" href="../index.html">Title</a>
+			<a class="topbar-item shadow" href="1.html">Lab 1</a>
+			<a class="topbar-item shadow" href="2.html">Lab 2</a>
+			<a class="topbar-item shadow" href="3.html">Lab 3</a>
+			<a class="topbar-item shadow active" href="4.html">Lab 4</a>
+			<a class="topbar-item shadow" href="5.html">Lab 5</a>
+			<a class="topbar-item shadow" href="6.html">Lab 6</a>
+			<a class="topbar-item shadow" href="7.html">Lab 7</a>
+			<a class="topbar-item shadow" href="8.html">Lab 8</a>
+			<a class="topbar-item shadow" href="9.html">Lab 9</a>
+		</div>
+		<div class="main">
+            <div id="menu">
+            	<div class="dropdown">
+                	<a class="menu-item flex">1. Тема, мета та постановка задачі ЛР№4</a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex active-link" onclick="ChangeTab(this, '1')">1.1. Тема лабораторнох роботи №4</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '2')">1.2. Мета лабораторної роботи №4</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '3')">1.3. Постановка задачі лабораторної роботи №4</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '4')">1.4. Класи та методи перевантаження операторів</a>
+               		</div>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex" onclick="ChangeTab(this, '5')">2. Місце розташування проекту. Середовище розробки</a>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex">3. Проектування структури ПЗ</a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '6')"> 3.1. UML-діаграма класів</a>>
+               		</div>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex">4. Кодування ПЗ (програмування)</a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '7')"> 4.1. Перевантаження унарних операторів</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '8')"> 4.2. Перевантаження бінарних операторів</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '9')"> 4.3. Перевантаження логічних операторів та операторів порівняння</a>
+                		<a class="submenu-item flex" onclick="ChangeTab(this, '10')"> 4.4. Файлова структура проекту</a>
+               		</div>
+                </div>
+                <div class="dropdown">
+                	<a class="menu-item flex">5. Впровадження та супроводження ПЗ</a>
+               	 	<div class="submenu">
+                		<a class="submenu-item flex" href='../src/SocialApp/'>6.1. Папка з проектом</a>
+                		<a class="submenu-item flex" href="../src/Exe-file/App-version2.exe" target="_blank">6.2. Запуск ехе-файла</a>
+               		</div>
+                </div>
+				<div class="dropdown">
+					<a class="menu-item flex" onclick="ChangeTab(this, '11')">Висновки</a>
+				</div>
+            </div>
+    
+            <div id="content">
+                <div id="1" class="active-item">
+                    <p>
+						<strong>Тема:</strong> ПЕРЕВАНТАЖЕННЯ УНАРНИХ, БІНАРНИХ, ЛОГІЧНИХ ОПЕРАТОРІВ, ОПЕРАТОРІВ ПОРІВНЯННЯ
+						
+                    </p>
+                </div>
+                <div id="2" class="item">
+					<p>
+                        <strong>Мета:</strong> Придбати практичні навички роботи  реалізації методів перевантаження унарних, бінарних, логічних операторів, операторів порівняння.
+					</p>
+				</div>
+                <div id="3" class="item">
+					<p>
+						<ul style="list-style-type: none"><strong> Постановка задачі:</strong>
+							<li>1.  Доповнити програмну реалізацію класів методами для перевантаження унарних, бінарних, логічних операторів, операторів порівняння. </li>
+							<li>2.  Протестувати програму. Зробити висновки.</li>
+						</ul>
+					</p>
+				</div>
+				<div id="4" class="item">
+					<h2>Класи та методи перевантаження операторів</h2>
+					<img src="../src/img/table_operators.jpg" style="width: 50%; height: 50%;" />
+				</div>
+				<div id="5" class="item">
+					<p>
+						<strong>Місце розташування проекту: </strong><a href="https://github.com/andrewTelychyn/SocialApp">посилання.</a>
+					</p>
+					<p>
+						<strong>Середовище розробки: </strong> в ході реалізації проекту в основому використовуються дві програми - Visual Studio 2019 та Visual Studio Code.
+					</p>
+				</div>
+				<div id="6" class="item">
+					<h2>Діаграма класів</h2>
+                	<img src="../src/img/classDiagram.jpg" width="80%" height="80%" />
+				</div>
+				<div id="7" class="item">
+					<h2>Програмний код класів з перевантаженням унарних операторів</h2>
+					<p>Оскільки в мене в проекті не існує місця, де вдало можна помістити подібне перевантаження оператора, то я рішив створити тимчасові класи для даної лабораторної роботи</p>
+
+					<h3>Код класу</h3>
+					<img src="../src/img/binun_class.jpg" width="80%" height="80%" />
+					<h3>Вивід</h3>
+					<img src="../src/img/binun_out.jpg" width="80%" height="80%" />
+					<h3>Використання</h3>
+					<img src="../src/img/operators_usage.jpg" width="80%" height="80%" />
+				</div>
+				<div id="8" class="item">
+					<h2>Програмний код класів з перевантаженням бінарних операторів</h2>
+					<p>Оскільки в мене в проекті не існує місця, де вдало можна помістити подібне перевантаження оператора, то я рішив створити тимчасові класи для даної лабораторної роботи</p>
+
+					<h3>Код класу</h3>
+					<img src="../src/img/binun_class.jpg" width="80%" height="80%" />
+					<h3>Вивід</h3>
+					<img src="../src/img/binun_out.jpg" width="80%" height="80%" />
+					<h3>Використання</h3>
+					<img src="../src/img/operators_usage.jpg" width="80%" height="80%" />
+				</div>
+				<div id="9" class="item">
+					<h2>Програмний код класів з перевантаженням логічних операторів та операторів порівняння</h2>
+					<p>Оскільки в мене в проекті не існує місця, де вдало можна помістити подібне перевантаження оператора, то я рішив створити тимчасові класи для даної лабораторної роботи</p>
+
+					<h3>Код класу</h3>
+					<img src="../src/img/logic_class.jpg" width="80%" height="80%" />
+					<h3>Вивід</h3>
+					<img src="../src/img/logic_out.jpg" width="80%" height="80%" />
+					<h3>Використання</h3>
+					<img src="../src/img/operators_usage.jpg" width="80%" height="80%" />
+				</div>
+
+				<div id="10" class="item">
+					<h2>Файлова структура проекту</h2>
+                	<img src="../src/img/solutionExplorer.jpg" style="width: 50%; height: 50%;" />
+				</div>
+				<div id="11" class="item">
+					<h2>
+						Висновок
+					</h2>
+					<p style="margin-right:20px;">
+						В ході виконання даної лабораторної роботи я закріпив свої знання та навички в перевантаженні операторів різних типів, таких як: логічних, унарних, бінарних, порівняння. Перевантаження подібного типу може бути корисним, коли ви хочете добавити певну нову логічу чи функціонал вашому класі, для того, щоб розширити можливості вашої програми. Логічні оператори - це оператори типу "&" та "!", вони працюють з булевими типами. Бінарні оператори - це оператори, що для виконання певної дії використовують два значення, унарні  - це ті, що лише одне. Оператори порівняння використовують для порівняння об'єктів одного класу певним особливим шляхом.
+					</p>
+				</div>
+            </div>
+        </div>
+		<div class="footer"></div>
+	</div>
+</html>
