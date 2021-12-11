@@ -53,6 +53,7 @@ export const useData = (userId) => {
             getAllData()
         } else {
             const data = JSON.parse(localStorage.getItem(storageName))
+            if (!data) return
 
             setData({
                 bio: data.bio,
